@@ -2,7 +2,7 @@ import json
 
 from api import get_dynamic_objects
 from src.models import Base, EnemyBase, Location, Zombie
-from src.war_utils import can_attack
+from src.utils import can_attack
 
 sample_json = """
 {
