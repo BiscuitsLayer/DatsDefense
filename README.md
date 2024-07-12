@@ -5,3 +5,9 @@
 ```bash
 ./Scripts/activate
 ```
+
+Запустить
+
+```bash
+python main.py
+```
