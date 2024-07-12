@@ -5,7 +5,7 @@ import requests
 from typing import Any, Dict, List, Optional, Tuple
 from fastapi import Depends, Response, status
 
-from src.models import Base, EnemyBase, Zombie
+from src.models import Base, EnemyBase, Zombie, ZombieSpot
 from src.utils import get_logger
 
 from dotenv import load_dotenv
@@ -93,6 +93,7 @@ def get_dynamic_objects():
         bases = [Base(**base) for base in resp_json['base']]
         enemy_bases = [EnemyBase(**enemy_base) for enemy_base in resp_json['enemyBlocks']]
         zombies = [Zombie(**zombie) for zombie in resp_json['zombies']]
+        return bases, enemy_bases, zombies
     else:
         raise Exception("Request failed")
     
@@ -100,7 +101,9 @@ def get_dynamic_objects():
 def get_static_objects():
     resp = make_request("GET", f"play/zombidef/world")
     if resp:
-        return resp.json()
+        resp_json = resp.json()
+        zpots = [ZombieSpot(**zombie_spot) for zombie_spot in resp_json['zpots']]
+        return zpots
     else:
         raise Exception("Request failed")
     
