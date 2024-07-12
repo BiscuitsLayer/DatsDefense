@@ -1,9 +1,12 @@
-from api import get_dynamic_objects
-from models import Location
+from src.models import Base, Location
 
-def can_attack(loc: Location):
-    bases_loc = [Location(base['x'], base['y']) for base in get_dynamic_objects()['base']]
-    for base_loc in bases_loc:
-        dist_sqr = (base_loc.x - loc.x) ** 2 + (base_loc.y - loc.y) ** 2
-        if dist_sqr >= base.range ** 2:
+def can_attack(loc: Location, bases: list[Base]):
+    possible_bases: list[Base] = []
+
+    for base in bases:
+        dist_sqr = (base.x - loc.x) ** 2 + (base.y - loc.y) ** 2
+        if dist_sqr <= base.range ** 2:
+            print(dist_sqr)
             possible_bases.append(base.id)
+
+    return possible_bases

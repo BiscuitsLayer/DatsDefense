@@ -3,7 +3,6 @@ from enum import Enum
 from typing import Any, Optional
 from pydantic import BaseModel
 
-
 class Location(BaseModel):
     x: int
     y: int
@@ -37,7 +36,7 @@ class EnemyBase(BaseModel):
     x: int
     y: int
 
-class Zombie:
+class Zombie(BaseModel):
     attack: int
     direction: str
     health: int
@@ -48,14 +47,8 @@ class Zombie:
     x: int
     y: int
 
-class CommandType(Enum):
-    ATTACK = 0
-    BUILD = 1
-    MOVE_BASE = 2
-
-class Command:
-    type: CommandType
-    loc: Location
+class ZombieSpot(Location):
+    type: str
 
 class ZombieType(Enum):
     NORMAL = "normal" # атакует одну клетку. Самоуничтожается после атаки.
