@@ -12,6 +12,12 @@
 ./Scripts/activate
 ```
 
+Ставим зависимости
+
+```bash
+python -m pip install -r requirements.txt
+```
+
 Запустить
 
 ```bash

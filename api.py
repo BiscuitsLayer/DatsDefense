@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 servers = {
-    "TEST": "https://games-test.datsteam.dev",
+    "TEST": "https://games-test.datsteam.dev/",
     "MAIN": "https://games.datsteam.dev/"
 }
 
