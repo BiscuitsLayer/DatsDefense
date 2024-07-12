@@ -7,7 +7,9 @@ from src.drawer import draw_map
 
 def main():
     print(f"Token is {os.getenv('TOKEN')}")
-    if not participate():
+    msg, participating = participate()
+    print(msg)
+    if not participating:
         print("Exiting")
         return None
 
