@@ -1,6 +1,6 @@
 import os
 import logging
-from src.models import Base, Location
+from src.models import Base, Vec2
 
 
 def get_logger(name):
@@ -17,7 +17,7 @@ def get_logger(name):
     return logger
 
 
-def can_attack(loc: Location, bases: list[Base]):
+def can_attack(loc: Vec2, bases: list[Base]):
     possible_bases: list[Base] = []
 
     for base in bases:
@@ -29,5 +29,5 @@ def can_attack(loc: Location, bases: list[Base]):
     return possible_bases
 
 
-def add_build_plan(loc: Location):
+def add_build_plan(loc: Vec2):
     pass

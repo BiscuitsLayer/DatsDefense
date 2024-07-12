@@ -3,18 +3,28 @@ from enum import Enum, auto
 from typing import Any, Optional, List
 from pydantic import BaseModel
 
-class Location(BaseModel):
+INT_INFTY = 10 ** 10
+
+class Vec2(BaseModel):
     x: int
     y: int
 
+class Rect:
+    top_left: Vec2
+    size: Vec2
+
+    def __init__(self, top_left: Vec2, size: Vec2):
+        self.top_left = top_left
+        self.size = size
+
 class Attack(BaseModel):
     blockId: str
-    target: Location
+    target: Vec2
 
-class Build(Location):
+class Build(Vec2):
     pass
 
-class MoveBase(Location):
+class MoveBase(Vec2):
     pass
 
 class Base(BaseModel):
@@ -22,7 +32,7 @@ class Base(BaseModel):
     health: int
     id: str
     isHead: bool
-    lastAttack: Location
+    lastAttack: Vec2
     range: int # насколько далеко
     x: int
     y: int
@@ -31,7 +41,7 @@ class EnemyBase(BaseModel):
     attack: int # сколько урона даёт
     health: int
     isHead: bool
-    lastAttack: Location
+    lastAttack: Vec2
     name: str
     x: int
     y: int
@@ -47,7 +57,7 @@ class Zombie(BaseModel):
     x: int
     y: int
 
-class ZombieSpot(Location):
+class ZombieSpot(Vec2):
     type: str
 
 class ZombieType(Enum):
@@ -61,10 +71,68 @@ class ZombieType(Enum):
 class TileType(Enum):
     DEFAULT = auto()
     BASE = auto()
+    CONTROL_CENTER = auto()
     ENEMY_BASE = auto()
+    WALL = auto()
+
 
 class Map:
-    tiles: List[List[TileType]]
+    """
+        Хранит тайлы карты
 
-    def __init__():
+        tiles - список тайлов
+        адресация: tiles[y][x]
+
+        зомби при хранении тайлов не учитываются, т.к. считаются динамическими игровыми объектами,
+        не представляющими из себя постройку, поверхность, препятствие etc
+
+        control_center - доступ к координатам центра управления. Опционален (тк нас могли УБИТЬ АХАХАХАХАХАХАХААХАХАХАХАХ)
+        base_entrance - координаты некой (любой) клетки базы. Опционально (если нас ПОЛНОСТЬЮ СНЕСЛИ АХАХАХАХАХАХАХААХАХАХАХАХ)
+        может быть полезно для каких-либо обходов в стиле dfs/bfs
+    """
+
+    tiles: List[List[TileType]]
+    control_center: Optional[Vec2] = None
+    base_entrance: Optional[Vec2] = None
+    bounds: Rect = Rect(top_left=Vec2(x=0, y=0), size=Vec2(x=0, y=0))
+
+    def __init__(self, bases: List[Base], enemy_bases: List[EnemyBase], zombies: List[Zombie], zpots: List[ZombieSpot]):
+        self._calc_bounds(bases, enemy_bases, zombies, zpots)
+
+        self.tiles = [[TileType.DEFAULT for _ in range(self.bounds.size.x)] for _ in range(self.bounds.size.y)]
+
+        for base in bases:
+            base_entrance = Vec2(x=base.x, y=base.y)
+            if (base.isHead):
+                control_center = Vec2(x=base.x, y=base.y)
+            self.tiles[base.y][base.x] = TileType.BASE
+        for enemy_base in enemy_bases:
+            self.tiles[base.y][base.x] = TileType.ENEMY_BASE
+        for zpot in zpots:
+            if zpot.type == "wall":
+                self.tiles[base.y][base.x] = TileType.WALL
+
+    def _calc_bounds(self, bases, enemy_bases, zombies, zpots):
+        top_left = Vec2(x=0, y=0)
+        down_right = Vec2(x=-INT_INFTY, y=-INT_INFTY)
+
+        for base in bases:
+            self._update_bounds_by_point(top_left, down_right, Vec2(x=base.x, y=base.y))
+
+        for enemy_base in enemy_bases:
+            self._update_bounds_by_point(top_left, down_right, Vec2(x=enemy_base.x, y=enemy_base.y))
+
+        for zombie in zombies:
+            self._update_bounds_by_point(top_left, down_right, Vec2(x=zombie.x, y=zombie.y))
+
+        self.bounds.top_left = top_left
+        self.bounds.size.x = down_right.x - top_left.x + 1
+        self.bounds.size.y = down_right.y - top_left.y + 1
+
+    def _update_bounds_by_point(self, top_left: Vec2, down_right: Vec2, new_point: Vec2):
+        top_left.x = min(top_left.x, new_point.x)
+        top_left.y = min(top_left.y, new_point.y)
+
+        down_right.x = max(down_right.x, new_point.x)
+        down_right.y = max(down_right.y, new_point.y)
         

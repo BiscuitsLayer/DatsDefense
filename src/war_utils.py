@@ -18,7 +18,6 @@ def can_attack(bases: List[Base], loc: Location) -> List[str]:
 
 def rank_zombies(zombies: List[Zombie]) -> List[Zombie]:
     result = []
-    
 
 def zombie_order() -> List[str]:
     pass

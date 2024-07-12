@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import multiprocessing
 from queue import Queue
 
-from src.models import Location
+from src.models import Vec2
 
 @dataclass
 class Planner:
@@ -13,7 +13,7 @@ class Planner:
 
     ## ATTACK ##
 
-    def plan_attack(self, loc: Location):
+    def plan_attack(self, loc: Vec2):
         self.attack_queue.put(loc)
 
     def get_next_attack_plan(self):
@@ -28,10 +28,10 @@ class Planner:
 
     ## BUILD ##
 
-    def plan_build(self, loc: Location):
+    def plan_build(self, loc: Vec2):
         self.build_queue.put(loc)
 
     ## MOVE BASE ##
 
-    def plan_move_base(self, loc: Location):
+    def plan_move_base(self, loc: Vec2):
         self.move_base_queue.put(loc)
