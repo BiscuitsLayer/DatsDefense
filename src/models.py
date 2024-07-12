@@ -1,22 +1,52 @@
+from pydantic.dataclasses import dataclass
 from enum import Enum
+from typing import Any, Optional
 from pydantic import BaseModel
+
 
 class Location(BaseModel):
     x: int
     y: int
 
+class Attack(BaseModel):
+    blockId: str
+    target: Location
+
+class Build(Location):
+    pass
+
+class MoveBase(Location):
+    pass
+
 class Base(BaseModel):
     attack: int # сколько урона даёт
-    range: int # насколько далеко
     health: int
-    loc: Location
+    id: str
     isHead: bool
     lastAttack: Location
+    range: int # насколько далеко
+    x: int
+    y: int
 
-    def __init__(self, **kwargs):
-        self.loc = Location(x=kwargs.get('x'), y=kwargs.get('y'))
+class EnemyBase(BaseModel):
+    attack: int # сколько урона даёт
+    health: int
+    isHead: bool
+    lastAttack: Location
+    name: str
+    x: int
+    y: int
 
-        super.__init__()
+class Zombie:
+    attack: int
+    direction: str
+    health: int
+    id: str
+    speed: int
+    type: str
+    waitTurns: int
+    x: int
+    y: int
 
 class CommandType(Enum):
     ATTACK = 0
