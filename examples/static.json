@@ -1,0 +1,85 @@
+{
+    "realmName": "test-day1-5",
+    "zpots": [
+        {
+            "x": 192,
+            "y": 176,
+            "type": "default"
+        },
+        {
+            "x": 192,
+            "y": 190,
+            "type": "default"
+        },
+        {
+            "x": 192,
+            "y": 172,
+            "type": "default"
+        },
+        {
+            "x": 192,
+            "y": 188,
+            "type": "default"
+        },
+        {
+            "x": 192,
+            "y": 170,
+            "type": "default"
+        },
+        {
+            "x": 192,
+            "y": 173,
+            "type": "default"
+        },
+        {
+            "x": 192,
+            "y": 171,
+            "type": "default"
+        },
+        {
+            "x": 192,
+            "y": 189,
+            "type": "default"
+        },
+        {
+            "x": 192,
+            "y": 175,
+            "type": "default"
+        },
+        {
+            "x": 192,
+            "y": 174,
+            "type": "default"
+        },
+        {
+            "x": 192,
+            "y": 184,
+            "type": "wall"
+        },
+        {
+            "x": 192,
+            "y": 177,
+            "type": "wall"
+        },
+        {
+            "x": 192,
+            "y": 185,
+            "type": "default"
+        },
+        {
+            "x": 192,
+            "y": 191,
+            "type": "default"
+        },
+        {
+            "x": 192,
+            "y": 187,
+            "type": "default"
+        },
+        {
+            "x": 192,
+            "y": 186,
+            "type": "default"
+        }
+    ]
+}

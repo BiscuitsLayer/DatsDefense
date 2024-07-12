@@ -5,7 +5,7 @@ import requests
 from typing import Any, Dict, List, Optional, Tuple
 from fastapi import Depends, Response, status
 
-from src.models import Command
+from src.models import Base, EnemyBase, Zombie
 from src.utils import get_logger
 
 from dotenv import load_dotenv
@@ -68,7 +68,7 @@ def participate() -> Tuple[str, bool]:
             return "ROUND HAS ALREADY STARTED", True
 
 
-def complete_action(commands: List[Command]):
+def complete_action():
     resp = make_request("POST", f"play/zombidef/command")
     if resp:
         return resp.json()
@@ -89,7 +89,10 @@ def get_rounds():
 def get_dynamic_objects():
     resp = make_request("GET", f"play/zombidef/units")
     if resp:
-        return resp.json()
+        resp_json = resp.json()
+        bases = [Base(**base) for base in resp_json['base']]
+        enemy_bases = [EnemyBase(**enemy_base) for enemy_base in resp_json['enemyBlocks']]
+        zombies = [Zombie(**zombie) for zombie in resp_json['zombies']]
     else:
         raise Exception("Request failed")
     
