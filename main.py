@@ -6,4 +6,5 @@ from api import get_rounds
 
 if __name__ == "__main__":
     print(f"Token is {os.getenv('TOKEN')}")
-    get_rounds()
+    
+    print(get_rounds()['now'])

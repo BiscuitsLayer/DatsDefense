@@ -13,4 +13,5 @@ servers = {
 def get_rounds():
     game_name = "game_name"
     resp = requests.get(f"{servers[os.getenv('SERVER')]}/rounds/{game_name}")
-    print(resp)
+    resp_json = resp.json()
+    return resp_json
