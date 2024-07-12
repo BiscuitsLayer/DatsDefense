@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 from src.const import ITER_TIME
 from src.planner import IntervalRunner, Planner
-from src.models import Location
+from src.models import Vec2
 load_dotenv()
 
 from api import *
@@ -36,11 +36,11 @@ def main():
 
             # Sample logic can be done like that
             route = [
-                Location(x=1, y=1),
-                Location(x=1, y=2),
-                Location(x=2, y=2),
-                Location(x=2, y=3),
-                Location(x=3, y=3),
+                Vec2(x=1, y=1),
+                Vec2(x=1, y=2),
+                Vec2(x=2, y=2),
+                Vec2(x=2, y=3),
+                Vec2(x=3, y=3),
             ]
 
             for loc in route:
