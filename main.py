@@ -1,14 +1,16 @@
 import os
 from dotenv import load_dotenv
 
-from src.planner import Planner
-from src.models import *
+from src.const import ITER_TIME
+from src.planner import IntervalRunner, Planner
+from src.models import Vec2
 load_dotenv()
 
 from api import *
 from src.drawer import draw_map
 
 def main():
+    # Verify token and register for a round
     # print(f"Token is {os.getenv('TOKEN')}")
     # msg, participating = participate()
     # print(msg)
@@ -16,54 +18,39 @@ def main():
     #     print("Exiting")
     #     return None
     
-    # route = [
-    #     Location(x=1, y=1),
-    #     Location(x=1, y=2),
-    #     Location(x=2, y=2),
-    #     Location(x=2, y=3),
-    #     Location(x=3, y=3),
-    # ]
+    # Create context to avoid doing many requests for a single iteration
+    context = Context()
 
-    # planner = Planner()
-    # for loc in route:
-    #     planner.plan_attack(loc)
+    # Create task planner and interval_runner that runs POST request every ITER_TIME seconds
+    planner = Planner()
+    get_runner = IntervalRunner(ITER_TIME, collect_info, args=[context])
+    # post_runner = IntervalRunner(ITER_TIME, complete_action, args=[planner])
+    get_runner.start()
+    # post_runner.start()
 
-    # while next_attack_plan := planner.get_next_attack_plan():
-    #     print(next_attack_plan)
-    
-    
-    # while True:
-    #     dynamic_objects = get_dynamic_objects()
-    #     static_object = get_static_objects()
+    while True:
+        try:  
+            ###
+            # ADD ALL LOGIC HERE
+            ###
 
-    # class Base(BaseModel):
-    #     attack: int # сколько урона даёт
-    #     health: int
-    #     id: str
-    #     isHead: bool
-    #     lastAttack: Vec2
-    #     range: int # насколько далеко
-    #     x: int
-    #     y: int
+            # Sample logic can be done like that
+            route = [
+                Vec2(x=1, y=1),
+                Vec2(x=1, y=2),
+                Vec2(x=2, y=2),
+                Vec2(x=2, y=3),
+                Vec2(x=3, y=3),
+            ]
 
+            for loc in route:
+                planner.plan_attack(loc)
 
-    map = Map(bases=[Base(attack=0, health=0, id="HAHAHAHAH", isHead=True, lastAttack=Vec2(x=0, y=0), range=10, x=0, y=0),
-                     Base(attack=0, health=0, id="HAHAHAHAH", isHead=True, lastAttack=Vec2(x=0, y=0), range=10, x=10, y=20),
-                     Base(attack=0, health=0, id="HAHAHAHAH", isHead=True, lastAttack=Vec2(x=0, y=0), range=10, x=10, y=30),
-                     Base(attack=0, health=0, id="HAHAHAHAH", isHead=True, lastAttack=Vec2(x=0, y=0), range=10, x=50, y=5)],
-                     enemy_bases=[], zombies=[], zpots=[])
-    
-    print(map.bounds.size.x)
-    print(map.bounds.size.y)
-
-    for rows in map.tiles:
-        for col in rows:
-            if col == TileType.BASE:
-                print('#', end='')
-            else:
-                print('_', end='')
-        print()
-
+        except KeyboardInterrupt:
+            print("Shutting down...")
+            # post_runner.stop()
+            get_runner.stop()
+            break
 
 if __name__ == "__main__":
     main()

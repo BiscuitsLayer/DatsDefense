@@ -1,6 +1,6 @@
 import os
 import logging
-from src.models import Base, Vec2
+from src.models import Base, Vec2, NeighborType
 
 
 def get_logger(name):
@@ -27,6 +27,27 @@ def can_attack(loc: Vec2, bases: list[Base]):
             possible_bases.append(base.id)
 
     return possible_bases
+
+
+
+def get_neighbor(loc: Vec2, type: NeighborType):
+    match type:
+        case NeighborType.TOP:
+            return Vec2(x=loc.x, y=loc.y+1)
+        case NeighborType.TOP_LEFT:
+            return Vec2(x=loc.x-1, y=loc.y+1)
+        case NeighborType.TOP_RIGHT:
+            return Vec2(x=loc.x+1, y=loc.y+1)
+        case NeighborType.LEFT:
+            return Vec2(x=loc.x-1, y=loc.y)
+        case NeighborType.RIGHT:
+            return Vec2(x=loc.x+1, y=loc.y)
+        case NeighborType.BOTTOM_LEFT:
+            return Vec2(x=loc.x-1, y=loc.y-1)
+        case NeighborType.BOTTOM_RIGHT:
+            return Vec2(x=loc.x+1, y=loc.y-1)
+        case NeighborType.BOTTOM:
+            return Vec2(x=loc.x, y=loc.y-1)
 
 
 def add_build_plan(loc: Vec2):

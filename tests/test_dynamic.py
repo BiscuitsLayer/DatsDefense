@@ -1,7 +1,7 @@
 import json
 
 from api import get_dynamic_objects
-from src.models import Base, EnemyBase, Location, Zombie
+from src.models import Base, EnemyBase, Vec2, Zombie
 from src.utils import can_attack
 
 sample_json = """
@@ -85,6 +85,6 @@ print(bases)
 print(enemy_bases)
 print(zombies)
 
-possible_bases = can_attack(Location(x=10, y=10), bases)
+possible_bases = can_attack(Vec2(x=10, y=10), bases)
 
 print(possible_bases)

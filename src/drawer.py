@@ -1,13 +1,13 @@
 def draw_map(input):
-    points = input['zpots']
+    zombie_spawners = input['zpots']
     special_points = []
 
-    minX = points[0]['x']
-    minY = points[0]['y']
-    maxX = points[0]['x']
-    maxY = points[0]['y']
+    minX = zombie_spawners[0]['x']
+    minY = zombie_spawners[0]['y']
+    maxX = zombie_spawners[0]['x']
+    maxY = zombie_spawners[0]['y']
 
-    for point in points:
+    for point in zombie_spawners:
         minX = min(minX, point['x'])
         minY = min(minY, point['y'])
         maxX = max(maxX, point['x'])
@@ -19,7 +19,3 @@ def draw_map(input):
     sizeY = maxY - minY + 1
 
     game_map: str = ('*' * sizeX + '\n') * sizeY
-    
-    for point in special_points:
-        game_map
-    print(game_map)

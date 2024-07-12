@@ -5,6 +5,17 @@ from pydantic import BaseModel
 
 INT_INFTY = 10 ** 10
 
+
+class NeighborType(Enum):
+    TOP = auto(),
+    TOP_LEFT = auto(),
+    TOP_RIGHT = auto(),
+    LEFT = auto(),
+    RIGHT = auto(),
+    BOTTOM_LEFT = auto(),
+    BOTTOM_RIGHT = auto(),
+    BOTTOM = auto()
+
 class Vec2(BaseModel):
     x: int
     y: int
