@@ -61,7 +61,7 @@ def sign(num):
 
 def add_build_plan():
     units = ... #get_dynamic_objects()
-    world = ... #get_static_objects()
+    # world = ... #get_static_objects()
 
     bases_coords = [[base.x, base.y] for base in units.bases]
     enemy_coords = [[base.x, base.y] for base in units.enemy_bases]
