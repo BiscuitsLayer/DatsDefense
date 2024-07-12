@@ -6,11 +6,12 @@
 
 [API тестового сервера](https://games-test.datsteam.dev/docs/index.html)
 
-<!-- Входим в environment
+Если на windows, то установить env
 
 ```bash
+python -m venv .
 ./Scripts/activate
-``` -->
+```
 
 Ставим зависимости
 
