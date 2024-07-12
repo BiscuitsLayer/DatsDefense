@@ -1,7 +1,17 @@
 from pydantic.dataclasses import dataclass
-from enum import Enum
+from enum import Enum, auto
 from typing import Any, Optional
 from pydantic import BaseModel
+
+class NeighborType(Enum):
+    TOP = auto(),
+    TOP_LEFT = auto(),
+    TOP_RIGHT = auto(),
+    LEFT = auto(),
+    RIGHT = auto(),
+    BOTTOM_LEFT = auto(),
+    BOTTOM_RIGHT = auto(),
+    BOTTOM = auto()
 
 class Location(BaseModel):
     x: int
