@@ -1,6 +1,6 @@
 import os
 import logging
-from src.models import Base, Location, NeighborType
+from src.models import Base, Vec2, NeighborType
 from api import get_dynamic_objects, get_static_objects
 from vlad import dist
 
@@ -29,7 +29,7 @@ def can_attack(loc: Vec2, bases: list[Base]):
 
     return possible_bases
 
-def can_build_here(loc: Location): 
+def can_build_here(loc: Vec2): 
     pass
 
 
@@ -53,14 +53,15 @@ def get_neighbor(loc: Vec2, type: NeighborType):
             return Vec2(x=loc.x, y=loc.y-1)
 
 
-def add_build_plan(loc: Location):
+def add_build_plan(loc: Vec2):
     pass
+
 def sign(num):
     return -1 if num < 0 else 1
 
 def add_build_plan():
-    units = get_dynamic_objects()
-    world = get_static_objects()
+    units = ... #get_dynamic_objects()
+    world = ... #get_static_objects()
 
     bases_coords = [[base.x, base.y] for base in units.bases]
     enemy_coords = [[base.x, base.y] for base in units.enemy_bases]

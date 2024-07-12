@@ -1,14 +1,14 @@
 import datetime
 import os
 import requests
-
+from src.utils import get_logger
 from typing import Any, Dict, List, Optional, Tuple
 from fastapi import Depends, Response, status
 
 from src.const import MAX_ATTACKS_PER_ITER, MAX_BUILDS_PER_ITER
 from src.planner import Planner
 from src.models import Base, EnemyBase, Zombie, ZombieSpot
-from src.utils import get_logger
+
 
 from dotenv import load_dotenv
 load_dotenv()
