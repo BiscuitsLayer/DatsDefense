@@ -60,6 +60,9 @@ def participate() -> Tuple[str, bool]:
         if "NOT" in resp.text:
             logger.info(f"Failed to register for round\n")
             return f"NOT PARTICIPATING IN THIS ROUND", False
+        if "not" in  resp.text:
+            logger.info(f"Rounds not found\n")
+            return f"ROUNDS NOT FOUND", False
         else:
             logger.info(f"Round has already started\n")
             return "ROUND HAS ALREADY STARTED", True
