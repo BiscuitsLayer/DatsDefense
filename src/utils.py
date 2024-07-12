@@ -18,7 +18,7 @@ def get_logger(name):
     return logger
 
 
-def can_attack(loc: Location, bases: list[Base]):
+def can_attack(loc: Vec2, bases: list[Base]):
     possible_bases: list[Base] = []
 
     for base in bases:
@@ -33,24 +33,24 @@ def can_build_here(loc: Location):
     pass
 
 
-def get_neighbor(loc: Location, type: NeighborType):
+def get_neighbor(loc: Vec2, type: NeighborType):
     match type:
         case NeighborType.TOP:
-            return Location(x=loc.x, y=loc.y+1)
+            return Vec2(x=loc.x, y=loc.y+1)
         case NeighborType.TOP_LEFT:
-            return Location(x=loc.x-1, y=loc.y+1)
+            return Vec2(x=loc.x-1, y=loc.y+1)
         case NeighborType.TOP_RIGHT:
-            return Location(x=loc.x+1, y=loc.y+1)
+            return Vec2(x=loc.x+1, y=loc.y+1)
         case NeighborType.LEFT:
-            return Location(x=loc.x-1, y=loc.y)
+            return Vec2(x=loc.x-1, y=loc.y)
         case NeighborType.RIGHT:
-            return Location(x=loc.x+1, y=loc.y)
+            return Vec2(x=loc.x+1, y=loc.y)
         case NeighborType.BOTTOM_LEFT:
-            return Location(x=loc.x-1, y=loc.y-1)
+            return Vec2(x=loc.x-1, y=loc.y-1)
         case NeighborType.BOTTOM_RIGHT:
-            return Location(x=loc.x+1, y=loc.y-1)
+            return Vec2(x=loc.x+1, y=loc.y-1)
         case NeighborType.BOTTOM:
-            return Location(x=loc.x, y=loc.y-1)
+            return Vec2(x=loc.x, y=loc.y-1)
 
 
 def add_build_plan(loc: Location):
