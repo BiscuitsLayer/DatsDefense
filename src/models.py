@@ -1,6 +1,6 @@
 from pydantic.dataclasses import dataclass
-from enum import Enum
-from typing import Any, Optional
+from enum import Enum, auto
+from typing import Any, Optional, List
 from pydantic import BaseModel
 
 class Location(BaseModel):
@@ -57,3 +57,14 @@ class ZombieType(Enum):
     LINER = "liner" # атакует все клетки базы расположенные рядом друг с другом вне зависимости от их количества. Самоуничтожается после атаки.
     JUGGERNAUT = "juggernaut" # уничтожает все клетки базы на которых окажется. В отличие от своих собратьев он не самоуничтожается, а всегда будет идти напролом, пока его не остановит игрок или специальные клетки.
     CHAOS_KNIGHT = "chaos_knight" # атакует клетку в которой оказался. Двигается в соответствии с правилами движения коня в шахматах. Движение происходит всегда на 3 клетки вперед и одну клетку в сторону, сторона и поворот Г определяется рандомно каждый ход. После атаки не самоуничтожается.
+
+class TileType(Enum):
+    DEFAULT = auto()
+    BASE = auto()
+    ENEMY_BASE = auto()
+
+class Map:
+    tiles: List[List[TileType]]
+
+    def __init__():
+        
