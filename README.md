@@ -6,11 +6,11 @@
 
 [API тестового сервера](https://games-test.datsteam.dev/docs/index.html)
 
-Входим в environment
+<!-- Входим в environment
 
 ```bash
 ./Scripts/activate
-```
+``` -->
 
 Ставим зависимости
 
