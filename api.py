@@ -5,6 +5,8 @@ import requests
 from typing import Any, Dict, List, Optional, Tuple
 from fastapi import Depends, Response, status
 
+from src.const import MAX_ATTACKS_PER_ITER, MAX_BUILDS_PER_ITER
+from src.planner import Planner
 from src.models import Base, EnemyBase, Zombie, ZombieSpot
 from src.utils import get_logger
 
@@ -17,6 +19,7 @@ servers = {
     "TEST": "https://games-test.datsteam.dev/",
     "MAIN": "https://games.datsteam.dev/"
 }
+
 
 def make_request(
         method: str, endpoint: str, body: Optional[Dict[str, Any]] = None, 
@@ -68,8 +71,19 @@ def participate() -> Tuple[str, bool]:
             return "ROUND HAS ALREADY STARTED", True
 
 
-def complete_action():
-    resp = make_request("POST", f"play/zombidef/command")
+def complete_action(planner: Planner):
+    """
+    POST request with all actions collected
+    """
+    body = {
+        # NOTE: Generator expression inside list comprehension (WOW)
+        # Do not touch this piece of code below is super cool
+        # Written by Serega Vinogradov Inc. 2024
+        "attack": [plan for plan in ((planner.get_next_attack_plan()) for _ in range(MAX_ATTACKS_PER_ITER)) if plan is not None],
+        "build": [plan for plan in (planner.get_next_build_plan() for _ in range(MAX_BUILDS_PER_ITER)) if plan is not None],
+        "moveBase": [plan for plan in (planner.get_next_move_base_plan() or []) if plan is not None],
+    }
+    resp = make_request("POST", f"play/zombidef/command", body=body)
     if resp:
         return resp.json()
     else:
@@ -107,3 +121,6 @@ def get_static_objects():
     else:
         raise Exception("Request failed")
     
+from src.context import Context
+def collect_info(context: Context):
+    context.update()
