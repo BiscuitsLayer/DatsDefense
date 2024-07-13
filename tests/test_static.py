@@ -1,6 +1,6 @@
 import json
 
-from api import get_dynamic_objects
+from src.api import get_dynamic_objects
 from src.models import ZombieSpot
 
 sample_json = """

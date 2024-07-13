@@ -1,6 +1,6 @@
 import json
 
-from api import get_dynamic_objects
+from src.api import get_dynamic_objects
 from src.models import Base, EnemyBase, Vec2, Zombie
 from src.utils import can_attack
 

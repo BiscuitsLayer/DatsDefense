@@ -20,6 +20,9 @@ class Vec2(BaseModel):
     x: int
     y: int
 
+    def __hash__(self):
+        return hash(str(self))
+
 class Rect:
     top_left: Vec2
     size: Vec2

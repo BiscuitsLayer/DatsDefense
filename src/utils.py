@@ -29,7 +29,6 @@ def can_attack(loc: Vec2, bases: list[Base]):
     return possible_bases
 
 
-
 def get_neighbor(loc: Vec2, type: NeighborType):
     match type:
         case NeighborType.TOP:
