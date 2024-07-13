@@ -170,14 +170,37 @@ def rank_knight_zombie(map: Map, zombie: Zombie, depth: int) -> float:
     assert depth <= 5, "depth is too big: 5 is max"
 
     n_strikes = 0
-    for pos in KNIGHT_OFFSETS[depth - 1]:
-        if map.tiles[pos.y][pos.x] == TileType.BASE:
+    for offset in KNIGHT_OFFSETS[depth - 1]:
+        to = Vec2(x=zombie.x + offset.x, y=zombie.y + offset.y)
+        if not map.bounds.is_point_inside(to):
+            continue
+        if map.tiles[to.y][to.x] == TileType.BASE:
             n_strikes += 1
 
-    return sum(i / n_strikes * zombie.attack for i in range(n_strikes, 0, -1))
+    return (n_strikes + 1) * zombie.attack / 2
 
-def rank_zombies(map: Map, zombies: List[Zombie], depth: int) -> List[Zombie]:
-    result = []
+def rank_zombie(map: Map, zombie: Zombie, depth: int) -> float:
+    match zombie.type:
+        case "normal":
+            return rank_normal_zombie(map, zombie, depth)
+        case "fast":
+            return rank_normal_zombie(map, zombie, depth)
+        case "bomber":
+            return rank_bomber_zombie(map, zombie, depth)
+        case "liner":
+            return rank_liner_zombie(map, zombie, depth)
+        case "juggernaut":
+            return rank_juggernaut_zombie(map, zombie, depth)
+        case "chaos_knight":
+            return rank_knight_zombie(map, zombie, depth)
+        case _:
+            raise ValueError("Unknown zombie type: " + zombie.type)
+
+def rank_zombies(map: Map, zombies: List[Zombie], depth: int) -> List[str]:
+    zombie_score_id = [(rank_zombie(map, zombie, depth), zombie.id) for zombie in zombies]
+    sorted(zombie_score_id, key=lambda pair: pair[0], reverse=True)
+    return [record[1] for record in zombie_score_id]
+
     
 def zombie_order() -> List[str]:
     pass
