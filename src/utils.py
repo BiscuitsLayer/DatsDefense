@@ -16,24 +16,24 @@ def can_attack(loc: Vec2, bases: list[Base]):
     return possible_bases
 
 
-def get_neighbor(loc: Vec2, type: NeighborType):
+def get_neighbor(loc: Vec2, type: NeighborType, delta: int = 1):
     match type:
         case NeighborType.TOP:
-            return Vec2(x=loc.x, y=loc.y-1)
+            return Vec2(x=loc.x, y=loc.y-delta)
         case NeighborType.TOP_LEFT:
-            return Vec2(x=loc.x-1, y=loc.y-1)
+            return Vec2(x=loc.x-delta, y=loc.y-delta)
         case NeighborType.TOP_RIGHT:
-            return Vec2(x=loc.x+1, y=loc.y-1)
+            return Vec2(x=loc.x+delta, y=loc.y-delta)
         case NeighborType.LEFT:
-            return Vec2(x=loc.x-1, y=loc.y)
+            return Vec2(x=loc.x-delta, y=loc.y)
         case NeighborType.RIGHT:
-            return Vec2(x=loc.x+1, y=loc.y)
+            return Vec2(x=loc.x+delta, y=loc.y)
         case NeighborType.BOTTOM_LEFT:
-            return Vec2(x=loc.x-1, y=loc.y+1)
+            return Vec2(x=loc.x-delta, y=loc.y+delta)
         case NeighborType.BOTTOM_RIGHT:
-            return Vec2(x=loc.x+1, y=loc.y+1)
+            return Vec2(x=loc.x+delta, y=loc.y+delta)
         case NeighborType.BOTTOM:
-            return Vec2(x=loc.x, y=loc.y+1)
+            return Vec2(x=loc.x, y=loc.y+delta)
         
 def get_direction(dir: str) -> Vec2:
     if dir == "up":

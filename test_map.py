@@ -1,6 +1,6 @@
 import json
 from src.models import Map, Base, EnemyBase, Vec2, Zombie, ZombieSpot
-from src.build_utils import enemies_n_build_plan
+from src.build_utils import build_route_to_enemies
 
 dynamic_json = """
 {
@@ -130,13 +130,11 @@ zombies = [Zombie(**zombie) for zombie in (resp_dynamic_json['zombies'] or [])]
 zpots = [ZombieSpot(**zombie_spot) for zombie_spot in resp_static_json['zpots']]
 
 map = Map(bases, enemy_bases, zombies, zpots)
-# print(f"Bounds: {map.bounds.size}")
-print(map)
 
-build_coords_list = enemies_n_build_plan(
+build_coords_list = build_route_to_enemies(
     n_to_build=5,
-    closest_enemy_coords=Vec2(x=213, y=203),
-    sorted_closest_to_enemy_base_coords=[Vec2(x=base.x, y=base.y) for base in bases],
+    enemy_bases_coords=[Vec2(x=base.x, y=base.y) for base in enemy_bases],
+    bases_coords=[Vec2(x=base.x, y=base.y) for base in bases],
     zombies=[],
     map=map
 )

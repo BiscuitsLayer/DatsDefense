@@ -2,7 +2,7 @@ import os
 import sys
 import logging
 from src.bfs import build_route
-from src.models import Base, EnemyBase, Map, TileType, Vec2, NeighborType, Zombie
+from src.models import Base, EnemyBase, Map, TileType, Vec2, NeighborType, Zombie, Attack
 from src.utils import get_neighbor
 from src.war_utils import dist
 
@@ -52,69 +52,33 @@ def get_build_plan(n_to_build, bases: list[Base], enemy_bases: list[EnemyBase], 
         )
         closest_enemy_coords = sorted(enemy_coords, key=lambda x: dist(x, geom_center))[0] # closest enemy to geom center
         sorted_closest_to_enemy_base_coords = sorted(bases_coords, key=lambda x: dist(x, closest_enemy_coords), reverse=True) # closest are in the end
-        build_coords_list = enemies_n_build_plan(n_to_build, closest_enemy_coords, sorted_closest_to_enemy_base_coords, zombies)
-        return build_coords_list
+        # build_coords_list = enemies_n_build_plan(n_to_build, closest_enemy_coords, sorted_closest_to_enemy_base_coords, zombies)
+        # return build_coords_list
     
     else: # no enemies
         # build_coords_list = no_enemies_n_build_plan(n_to_build, zombies)
         # return build_coords_list
         pass
     
-def enemies_n_build_plan(n_to_build: int, closest_enemy_coords: Vec2, sorted_closest_to_enemy_base_coords: list[Vec2],  map: Map, zombies: list[Zombie]):
-    routes = [build_route(base_coords, closest_enemy_coords, map, zombies) for base_coords in sorted_closest_to_enemy_base_coords]
-    routes = [route for route in routes if route is not None][:n_to_build]
+def build_route_to_enemies(n_to_build: int, enemy_bases_coords: list[Vec2], bases_coords: list[Vec2], map: Map, zombies: list[Zombie]):
+    dest_locations = set()
+    for enemy_base_coords in enemy_bases_coords:
+        neighbor_locs = set(get_neighbor(Vec2(x=enemy_base_coords.x, y=enemy_base_coords.y), neighbor_type, delta=2) for neighbor_type in NeighborType)
+        dest_locations |= neighbor_locs
+
+    routes = []
+    for dest_location in dest_locations:
+        routes += [route for route in (build_route(base_coords, dest_location, map, zombies) for base_coords in bases_coords) if route is not None]
+
+    routes = [route for route in routes if None not in route][:n_to_build]
     return routes
 
-    # return build_route(sorted_closest_to_enemy_base_coords[0], closest_enemy_coords, map, zombies)
+def attack_enemies(n_to_attack: int, enemy_bases_coords: list[Vec2], bases: list[Base]):
+    attacks = []
+    for enemy_base_coords in enemy_bases_coords:
+        for base in bases:
+            if dist(enemy_base_coords, Vec2(x=base.x, y=base.y)) < base.range:
+                attacks.append(Attack(blockId=base.id, target=enemy_base_coords))
+                break
 
-def enemies_n_build_plan_old(n_to_build: int, closest_enemy_coords: Vec2, sorted_closest_to_enemy_base_coords: list[Vec2], zombies: list[Zombie], map: Map):
-    build_coords_list = list()
-    closest_to_enemy_ind = len(sorted_closest_to_enemy_base_coords)
-    for _ in range(0, n_to_build):
-        is_built = False
-        if closest_to_enemy_ind < 0:
-            break
-
-        while is_built == False and closest_to_enemy_ind >= 0:
-            closest_to_enemy_ind -= 1
-            closest_to_enemy_coords = sorted_closest_to_enemy_base_coords[closest_to_enemy_ind]
-            print(f"closest_to_enemy_coords {closest_to_enemy_coords}")
-
-            build_direction = closest_enemy_coords - closest_to_enemy_coords
-            print(f"build_direction {build_direction}")
-
-            ax = int(abs(build_direction.x) > abs(build_direction.y))
-            axis_unit = Vec2(
-                x=sign(build_direction.x)*[1, 0][ax], 
-                y=sign(build_direction.y)*[0, 1][ax]
-            )
-            print(f"axis_unit {axis_unit}")
-
-            closest_to_enemy_coords, is_built = check_build_direction(axis_unit, build_direction, closest_to_enemy_coords, build_coords_list, zombies, map)
-            if is_built:
-                sorted_closest_to_enemy_base_coords.append(closest_to_enemy_coords)
-                closest_to_enemy_ind += 1
-    
-    return build_coords_list
-
-
-def check_build_direction(axis_unit: Vec2, build_direction: Vec2, closest_to_enemy_coords: Vec2, build_coords_list: list[Vec2], zombies: list[Zombie], map: Map): # 0 / 1
-    add = False
-    potential_build_coords = closest_to_enemy_coords + axis_unit
-    print(f'potential coords: {potential_build_coords} result {can_build_here(potential_build_coords, map, zombies, build_coords_list)}')
-    if can_build_here(potential_build_coords, map, zombies, build_coords_list):
-        add = True
-        build_coords_list.append(potential_build_coords)
-        build_direction -= axis_unit
-    else:
-        axis_unit = Vec2(x=axis_unit.y, y=axis_unit.x)
-        potential_build_coords = closest_to_enemy_coords+axis_unit
-        print(f'potential coords: {potential_build_coords} result {can_build_here(potential_build_coords, map, zombies, build_coords_list)}')
-        if can_build_here(potential_build_coords, map, zombies, build_coords_list):
-            add = True
-            build_coords_list.append(potential_build_coords)
-            build_direction -= axis_unit
-    if add == True:
-        closest_to_enemy_coords = potential_build_coords
-    return closest_to_enemy_coords, add
-
+    return attacks

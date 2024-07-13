@@ -56,12 +56,10 @@ def bfs(furthest_dist: int, init_loc: Vec2, map: Map, zombies: list[Zombie]) -> 
     return bfs_map
 
 
-def build_route(init_loc: Vec2, dest_loc: Vec2, map: Map, zombies: list[Zombie]) -> list[Vec2]:
-    bfs_map: dict[Vec2, BFSMapElement] = bfs(FURTHEST_DIST, init_loc, map, zombies)
+def build_route(init_loc: Vec2, dest_loc: Vec2, map: Map, zombies: list[Zombie], furthest_dist: int = FURTHEST_DIST) -> list[Vec2]:
+    bfs_map: dict[Vec2, BFSMapElement] = bfs(furthest_dist, init_loc, map, zombies)
 
     if not dest_loc in bfs_map:
-        print(bfs_map.keys())
-        print(f"UNREACHABLE from {init_loc}")
         # Cannot reach
         return None
     
