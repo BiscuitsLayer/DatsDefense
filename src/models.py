@@ -32,12 +32,17 @@ class Vec2(BaseModel):
     def __add__(self, other):
         if not isinstance(other, Vec2):
             raise ValueError("Operand must be instance of Vec2")
-        return Vec2(self.x + other.x, self.y + other.y)
+        return Vec2(x=self.x+other.x, y=self.y+other.y)
+    
+    def __sub__(self, other):
+        if not isinstance(other, Vec2):
+            raise ValueError("Operand must be instance of Vec2")
+        return Vec2(x=self.x-other.x, y=self.y-other.y)
     
     def __mul__(self, scalar):
         if not isinstance(scalar, int):
             raise ValueError("Operand must be a numeric value")
-        return Vec2(self.x * scalar, self.y * scalar)
+        return Vec2(x=self.x*scalar, y=self.y*scalar)
 
 class Rect:
     top_left: Vec2
@@ -168,8 +173,8 @@ class Map:
             self.__update_bounds_by_point(top_left, down_right, Vec2(x=zpot.x, y=zpot.y))
 
         self.bounds.top_left = top_left
-        self.bounds.size.x = down_right.x - top_left.x + 1
-        self.bounds.size.y = down_right.y - top_left.y + 1
+        self.bounds.size.x = (down_right.x - top_left.x + 1) * 2
+        self.bounds.size.y = (down_right.y - top_left.y + 1) * 2
 
     def __update_bounds_by_point(self, top_left: Vec2, down_right: Vec2, new_point: Vec2):
         top_left.x = min(top_left.x, new_point.x)

@@ -1,8 +1,9 @@
-from src.api import get_dynamic_objects
 from math import sqrt
 from typing import List
-from models import Vec2, Base, Zombie, Map, TileType
-from utils import get_direction
+
+from src.api import get_dynamic_objects
+from src.models import Vec2, Base, Zombie, Map, TileType
+from src.utils import get_direction
 
 def dist_sqr(p1: Vec2, p2: Vec2):
     return (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2

@@ -1,5 +1,6 @@
 import json
 from src.models import Map, Base, EnemyBase, Vec2, Zombie, ZombieSpot
+from src.build_utils import enemies_n_build_plan
 
 dynamic_json = """
 {
@@ -44,8 +45,8 @@ dynamic_json = """
     "enemyBlocks": [
         {
             "id": "enemy-id1",
-            "x": 208,
-            "y": 193,
+            "x": 213,
+            "y": 203,
             "health": 100,
             "attack": 10,
             "range": 5,
@@ -53,8 +54,8 @@ dynamic_json = """
         },
         {
             "id": "enemy-id2",
-            "x": 208,
-            "y": 192,
+            "x": 213,
+            "y": 202,
             "health": 100,
             "attack": 10,
             "range": 5,
@@ -62,8 +63,8 @@ dynamic_json = """
         },
         {
             "id": "enemy-id3",
-            "x": 207,
-            "y": 193,
+            "x": 212,
+            "y": 203,
             "health": 100,
             "attack": 10,
             "range": 5,
@@ -71,8 +72,8 @@ dynamic_json = """
         },
         {
             "id": "enemy-id4",
-            "x": 207,
-            "y": 192,
+            "x": 212,
+            "y": 202,
             "health": 100,
             "attack": 10,
             "range": 5,
@@ -87,23 +88,33 @@ static_json = """
 {
     "zpots": [
         {
-            "x": 210,
+            "x": 215,
+            "y": 200,
+            "type": "wall"
+        },
+        {
+            "x": 215,
             "y": 201,
             "type": "wall"
         },
         {
-            "x": 210,
+            "x": 215,
             "y": 202,
             "type": "wall"
         },
         {
-            "x": 210,
+            "x": 215,
             "y": 203,
             "type": "wall"
         },
         {
-            "x": 210,
-            "y": 204,
+            "x": 215,
+            "y": 205,
+            "type": "wall"
+        },
+        {
+            "x": 215,
+            "y": 206,
             "type": "wall"
         }
     ]
@@ -119,4 +130,15 @@ zombies = [Zombie(**zombie) for zombie in (resp_dynamic_json['zombies'] or [])]
 zpots = [ZombieSpot(**zombie_spot) for zombie_spot in resp_static_json['zpots']]
 
 map = Map(bases, enemy_bases, zombies, zpots)
+# print(f"Bounds: {map.bounds.size}")
 print(map)
+
+build_coords_list = enemies_n_build_plan(
+    n_to_build=5,
+    closest_enemy_coords=Vec2(x=213, y=203),
+    sorted_closest_to_enemy_base_coords=[Vec2(x=base.x, y=base.y) for base in bases],
+    zombies=[],
+    map=map
+)
+
+print(build_coords_list)
