@@ -552,4 +552,5 @@ zombies = [Zombie(**zombie) for zombie in resp_dynamic_json['zombies']]
 zpots = [ZombieSpot(**zombie_spot) for zombie_spot in resp_static_json['zpots']]
 
 map = Map(bases, enemy_bases, zombies, zpots)
-print(map.tiles)
+print(map)
+print(map.tiles[203][218])

@@ -134,7 +134,7 @@ class Map:
     bounds: Rect = Rect(top_left=Vec2(x=0, y=0), size=Vec2(x=0, y=0))
 
     def __init__(self, bases: List[Base], enemy_bases: List[EnemyBase], zombies: List[Zombie], zpots: List[ZombieSpot]):
-        self._calc_bounds(bases, enemy_bases, zombies, zpots)
+        self.__calc_bounds(bases, enemy_bases, zombies, zpots)
 
         self.tiles = [[TileType.DEFAULT for _ in range(self.bounds.size.x)] for _ in range(self.bounds.size.y)]
 
@@ -144,33 +144,53 @@ class Map:
                 control_center = Vec2(x=base.x, y=base.y)
             self.tiles[base.y][base.x] = TileType.BASE
         for enemy_base in enemy_bases:
-            self.tiles[base.y][base.x] = TileType.ENEMY_BASE
+            self.tiles[enemy_base.y][enemy_base.x] = TileType.ENEMY_BASE
         for zpot in zpots:
             if zpot.type == "wall":
-                self.tiles[base.y][base.x] = TileType.WALL
+                self.tiles[zpot.y][zpot.x] = TileType.WALL
             if zpot.type == "default":
-                self.tiles[base.y][base.x] = TileType.ZOMBIE_GTOR
+                self.tiles[zpot.y][zpot.x] = TileType.ZOMBIE_GTOR
 
-    def _calc_bounds(self, bases, enemy_bases, zombies, zpots):
+    def __calc_bounds(self, bases, enemy_bases, zombies, zpots):
         top_left = Vec2(x=0, y=0)
         down_right = Vec2(x=-INT_INFTY, y=-INT_INFTY)
 
         for base in bases:
-            self._update_bounds_by_point(top_left, down_right, Vec2(x=base.x, y=base.y))
+            self.__update_bounds_by_point(top_left, down_right, Vec2(x=base.x, y=base.y))
 
         for enemy_base in enemy_bases:
-            self._update_bounds_by_point(top_left, down_right, Vec2(x=enemy_base.x, y=enemy_base.y))
+            self.__update_bounds_by_point(top_left, down_right, Vec2(x=enemy_base.x, y=enemy_base.y))
 
         for zombie in zombies:
-            self._update_bounds_by_point(top_left, down_right, Vec2(x=zombie.x, y=zombie.y))
+            self.__update_bounds_by_point(top_left, down_right, Vec2(x=zombie.x, y=zombie.y))
 
         self.bounds.top_left = top_left
         self.bounds.size.x = down_right.x - top_left.x + 1
         self.bounds.size.y = down_right.y - top_left.y + 1
 
-    def _update_bounds_by_point(self, top_left: Vec2, down_right: Vec2, new_point: Vec2):
+    def __update_bounds_by_point(self, top_left: Vec2, down_right: Vec2, new_point: Vec2):
         top_left.x = min(top_left.x, new_point.x)
         top_left.y = min(top_left.y, new_point.y)
 
         down_right.x = max(down_right.x, new_point.x)
         down_right.y = max(down_right.y, new_point.y)
+
+    def __str__(self):
+        res = ""
+        for row in self.tiles:
+            for tile in row:
+                match tile:
+                    case TileType.DEFAULT:
+                        res += '_'
+                    case TileType.BASE:
+                        res += 'B'
+                    case TileType.CONTROL_CENTER:
+                        res += 'C'
+                    case TileType.ENEMY_BASE:
+                        res += 'E'
+                    case TileType.WALL:
+                        res += 'W'
+                    case TileType.ZOMBIE_GTOR:
+                        res += 'G'
+            res += "\n"
+        return res
