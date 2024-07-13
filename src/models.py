@@ -67,8 +67,8 @@ class Base(BaseModel):
     attack: int # сколько урона даёт
     health: int
     id: str
-    isHead: bool
-    lastAttack: Vec2
+    isHead: Optional[bool] = None
+    lastAttack: Optional[Vec2] = None
     range: int # насколько далеко
     x: int
     y: int
@@ -76,9 +76,9 @@ class Base(BaseModel):
 class EnemyBase(BaseModel):
     attack: int # сколько урона даёт
     health: int
-    isHead: bool
-    lastAttack: Vec2
-    name: str
+    isHead: Optional[bool] = None
+    lastAttack: Optional[Vec2] = None
+    name: Optional[str] = None
     x: int
     y: int
 
