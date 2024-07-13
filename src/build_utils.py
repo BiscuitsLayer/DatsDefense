@@ -90,4 +90,4 @@ def heal_zombies(bases: list[Base], zombies: list[Zombie], map: Map):
     for item in order:
         heals.append(Attack(blockId=item[0], target=item[1]))
         busy_bases_ids.append(item[0])
-    return heals
+    return heals, busy_bases_ids

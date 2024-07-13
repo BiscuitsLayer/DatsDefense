@@ -57,7 +57,7 @@ def main():
             attacks, busy_bases_ids = heal_zombies(
                 bases=context.bases,
                 zombies=context.zombies,
-                map=map
+                map=context.map
             )
             attacks += attack_enemies(
                 n_to_attack=5,
