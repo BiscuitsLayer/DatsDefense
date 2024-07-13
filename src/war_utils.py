@@ -1,5 +1,6 @@
+from collections import defaultdict
 from math import sqrt
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
 from src.api import get_dynamic_objects
 from src.models import Vec2, Base, Zombie, Map, TileType
@@ -15,7 +16,7 @@ def dist(p1: Vec2, p2: Vec2):
 def can_attack(bases: List[Base], loc: Vec2) -> List[str]:
     result = []
     for base in bases:
-        if dist_sqr(loc, Vec2(base.x, base.y)) <= base.range ** 2:
+        if dist_sqr(loc, Vec2(x=base.x, y=base.y)) <= base.range ** 2:
             result.append(base.id)
     return result
 
@@ -201,10 +202,19 @@ def rank_zombie(map: Map, zombie: Zombie, depth: int) -> float:
         case _:
             raise ValueError("Unknown zombie type: " + zombie.type)
 
-def rank_zombies(map: Map, zombies: List[Zombie], depth: int) -> List[Tuple[float, str]]:
-    zombie_score_id = [(rank_zombie(map, zombie, depth), zombie.id) for zombie in zombies]
+def rank_zombies(map: Map, zombies: List[Zombie], depth: int) -> List[Tuple[float, str, Vec2]]:
+    zombie_score_id = [(rank_zombie(map, zombie, depth), zombie.id, Vec2(x=zombie.x, y=zombie.y)) for zombie in zombies]
     sorted(zombie_score_id, key=lambda pair: pair[0], reverse=True)
     return zombie_score_id
 
-def zombie_order() -> List[str]:
-    pass
+def zombie_order(map: Map, zombies: List[Zombie], bases: List[Base], depth: int) -> List[Tuple[str, Vec2]]:
+    sorted = rank_zombies(map, zombies, depth)
+    used: Dict[str, bool] = defaultdict(lambda: False)
+    can_attack_map = ((can_attack(bases, zombie[2]), zombie[2]) for zombie in sorted)
+    res: List[Tuple[str, Vec2]] = []
+    for can_attack_item in can_attack_map:
+        for base in can_attack_item[0]:
+            if not used[base]:
+                used[base] = True
+                res.append((base, can_attack_item[1]))
+    return res

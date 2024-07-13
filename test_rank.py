@@ -1,6 +1,6 @@
 import json
 from src.models import Map, Base, EnemyBase, Vec2, Zombie, ZombieSpot
-from src.war_utils import rank_zombies
+from src.war_utils import rank_zombies, zombie_order
 
 dynamic_json = """
 {
@@ -592,3 +592,5 @@ map = Map(bases, enemy_bases, zombies, zpots)
 print(map)
 
 print(rank_zombies(map, zombies, 6))
+
+print(zombie_order(map, zombies, bases, 6))
