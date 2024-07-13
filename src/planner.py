@@ -65,7 +65,7 @@ class Planner:
         with self.attack_queue_mutex:
             self.attack_queue.append(loc)
 
-    def get_next_attack_plan(self):
+    def get_next_attack_plan(self) -> Attack:
         with self.attack_queue_mutex:
             if self.attack_queue:
                 return self.attack_queue.popleft()
@@ -80,7 +80,7 @@ class Planner:
         with self.build_queue_mutex:
             self.build_queue.append(loc)
 
-    def get_next_build_plan(self):
+    def get_next_build_plan(self) -> Build:
         with self.build_queue_mutex:
             if self.build_queue:
                 return self.build_queue.popleft()
@@ -95,7 +95,7 @@ class Planner:
         with self.move_base_queue_mutex:
             self.move_base_queue.append(loc)
 
-    def get_next_move_base_plan(self):
+    def get_next_move_base_plan(self) -> MoveBase:
         with self.move_base_queue_mutex:
             if self.move_base_queue:
                 return self.move_base_queue.popleft()

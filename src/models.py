@@ -174,4 +174,3 @@ class Map:
 
         down_right.x = max(down_right.x, new_point.x)
         down_right.y = max(down_right.y, new_point.y)
-        

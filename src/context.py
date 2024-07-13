@@ -16,8 +16,8 @@ class Context(metaclass=Singleton):
         self.zombies = None
 
         # No need to update zpots, because they are static (const)
-        # self.zpots = get_static_objects()
+        self.zpots = get_static_objects()
 
     def update(self):
         print("Context updated")
-        # self.bases, self.enemy_bases, self.zombies = get_dynamic_objects()
+        self.bases, self.enemy_bases, self.zombies = get_dynamic_objects()
