@@ -499,11 +499,55 @@ dynamic_json = """
             "direction": "up",
             "health": 100,
             "speed": 1,
-            "type": normal,
+            "type": "normal",
             "waitTurns": 0,
             "id": "id1",
             "x": 6,
-            "y": 10,
+            "y": 10
+        },
+        {
+            "attack": 10,
+            "direction": "up",
+            "health": 100,
+            "speed": 1,
+            "type": "bomber",
+            "waitTurns": 0,
+            "id": "id2",
+            "x": 8,
+            "y": 10
+        },
+        {
+            "attack": 10,
+            "direction": "up",
+            "health": 100,
+            "speed": 1,
+            "type": "liner",
+            "waitTurns": 0,
+            "id": "id3",
+            "x": 5,
+            "y": 8
+        },
+        {
+            "attack": 10,
+            "direction": "up",
+            "health": 100,
+            "speed": 1,
+            "type": "chaos_knight",
+            "waitTurns": 0,
+            "id": "id4",
+            "x": 9,
+            "y": 8
+        },
+        {
+            "attack": 10,
+            "direction": "up",
+            "health": 100,
+            "speed": 1,
+            "type": "juggernaut",
+            "waitTurns": 0,
+            "id": "id5",
+            "x": 10,
+            "y": 8
         }
     ]
 }
@@ -546,3 +590,5 @@ zpots = [ZombieSpot(**zombie_spot) for zombie_spot in resp_static_json['zpots']]
 
 map = Map(bases, enemy_bases, zombies, zpots)
 print(map)
+
+print(rank_zombies(map, zombies, 6))

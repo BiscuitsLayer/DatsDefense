@@ -1,9 +1,10 @@
-from src.api import get_dynamic_objects
 from math import sqrt
-from typing import List
-from models import Vec2, Base, Zombie, Map, TileType
-from utils import get_direction
-from knight_offsets import KNIGHT_OFFSETS
+from typing import List, Tuple
+
+from src.api import get_dynamic_objects
+from src.models import Vec2, Base, Zombie, Map, TileType
+from src.utils import get_direction
+from src.knight_offsets import KNIGHT_OFFSETS
 
 def dist_sqr(p1: Vec2, p2: Vec2):
     return (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2
@@ -34,8 +35,8 @@ def rank_normal_zombie(map: Map, zombie: Zombie, depth: int) -> float:
                 return curr_score
             curr_point += direction
         curr_score -= delta
-        
-    raise RuntimeError("should have returned the value already")
+
+    return 0.0  
 
 def rank_bomber_zombie(map: Map, zombie: Zombie, depth: int) -> float:
     curr_point = Vec2(x=zombie.x, y=zombie.y)
@@ -62,7 +63,7 @@ def rank_bomber_zombie(map: Map, zombie: Zombie, depth: int) -> float:
             curr_point += direction
         curr_score -= delta
 
-    raise RuntimeError("should have returned the value already")
+    return res_score
 
 
 def rank_liner_zombie(map: Map, zombie: Zombie, depth: int) -> float:
@@ -167,17 +168,21 @@ def rank_juggernaut_zombie(map: Map, zombie: Zombie, depth: int) -> float:
 
 
 def rank_knight_zombie(map: Map, zombie: Zombie, depth: int) -> float:
-    assert depth <= 5, "depth is too big: 5 is max"
+    depth = min(depth, 5)
 
     n_strikes = 0
+    res_score = 0
+    cur_score = zombie.attack
     for offset in KNIGHT_OFFSETS[depth - 1]:
         to = Vec2(x=zombie.x + offset.x, y=zombie.y + offset.y)
         if not map.bounds.is_point_inside(to):
             continue
         if map.tiles[to.y][to.x] == TileType.BASE:
             n_strikes += 1
+            res_score += cur_score
+            cur_score *= 0.5
 
-    return (n_strikes + 1) * zombie.attack / 2
+    return 0.5 * res_score
 
 def rank_zombie(map: Map, zombie: Zombie, depth: int) -> float:
     match zombie.type:
@@ -196,10 +201,10 @@ def rank_zombie(map: Map, zombie: Zombie, depth: int) -> float:
         case _:
             raise ValueError("Unknown zombie type: " + zombie.type)
 
-def rank_zombies(map: Map, zombies: List[Zombie], depth: int) -> List[str]:
+def rank_zombies(map: Map, zombies: List[Zombie], depth: int) -> List[Tuple[float, str]]:
     zombie_score_id = [(rank_zombie(map, zombie, depth), zombie.id) for zombie in zombies]
     sorted(zombie_score_id, key=lambda pair: pair[0], reverse=True)
-    return [record[1] for record in zombie_score_id]
+    return zombie_score_id
 
 def zombie_order() -> List[str]:
     pass

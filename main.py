@@ -1,5 +1,8 @@
 import os
 from dotenv import load_dotenv
+
+from src.bfs import build_route
+from src.build_utils import attack_enemies, build_route_to_enemies
 load_dotenv()
 
 from src.api import *
@@ -31,16 +34,36 @@ def main():
             ###
             # ADD ALL LOGIC HERE
             ###
+            map = map(context.bases, context.enemy_bases, context.zombies, context.zpots)
+
+            routes = build_route_to_enemies(
+                n_to_build=5,
+                enemy_bases_coords=[Vec2(x=base.x, y=base.y) for base in context.enemy_bases],
+                bases_coords=[Vec2(x=base.x, y=base.y) for base in context.bases],
+                zombies=context.zombies,
+                map=map
+            )
+            if routes:
+                best_route = routes[0]
+                for loc in best_route:
+                    build = Build(x=loc.x+1, y=loc.y+1)
+                    planner.plan_build(build)
+
+            attacks = attack_enemies(
+                n_to_attack=5,
+                enemy_bases_coords=[Vec2(x=base.x, y=base.y) for base in context.enemy_bases],
+                bases=context.bases,
+            )
 
             # Sample logic can be done like that
             for base in (context.bases or []):
                 attack = Attack(target=Vec2(x=base.x+5, y=base.y+5), blockId=base.id)
                 planner.plan_attack(attack)
+            if attacks:
+                for attack in attacks:
+                    planner.plan_attack(attack)
 
-            for base in (context.bases or []):
-                build = Build(x=base.x+1, y=base.y+1)
-                planner.plan_build(build)
-
+                
         except KeyboardInterrupt:
             print("Shutting down...")
             post_runner.stop()
