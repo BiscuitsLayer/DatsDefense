@@ -21,7 +21,7 @@ def main():
     while not participating:
         msg, participating = participate()
         print(msg)
-        time.sleep(2)
+        time.sleep(5)
         # print("Exiting")
         # return None
     
@@ -67,14 +67,10 @@ def main():
                 enemy_bases_coords=[Vec2(x=base.x, y=base.y) for base in context.enemy_bases],
                 bases=context.bases,
             )
-
-            # Sample logic can be done like that
-            for base in (context.bases or []):
-                attack = Attack(target=Vec2(x=base.x+5, y=base.y+5), blockId=base.id)
-                planner.plan_attack(attack)
             if attacks:
                 for attack in attacks:
                     planner.plan_attack(attack)
+            
                 
         except KeyboardInterrupt:
             print("Shutting down...")
