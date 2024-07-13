@@ -21,8 +21,8 @@ def rank_normal_zombie(map: Map, zombie: Zombie, depth: int) -> float:
     curr_point = Vec2(x=zombie.x, y=zombie.y)
     direction = get_direction(zombie.direction)
 
-    curr_score = 10.0
-    linear_coeff = 0.1
+    curr_score = zombie.attack
+    linear_coeff = 1 / depth
     delta = curr_score * linear_coeff
 
     for _ in range(depth):
@@ -33,8 +33,6 @@ def rank_normal_zombie(map: Map, zombie: Zombie, depth: int) -> float:
                 return curr_score
             curr_point += direction
         curr_score -= delta
-        if curr_score <= 0.0:
-            return 0.0
         
     raise RuntimeError("should have returned the value already")
 
@@ -43,8 +41,8 @@ def rank_bomber_zombie(map: Map, zombie: Zombie, depth: int) -> float:
     direction = get_direction(zombie.direction)
 
     res_score = 0.0
-    curr_score = 10.0
-    linear_coeff = 0.1
+    curr_score = zombie.attack
+    linear_coeff = 1 / depth
     delta = curr_score * linear_coeff
 
     for _ in range(depth):
@@ -62,11 +60,112 @@ def rank_bomber_zombie(map: Map, zombie: Zombie, depth: int) -> float:
                 return res_score
             curr_point += direction
         curr_score -= delta
-        if curr_score <= 0.0:
-            return 0.0
 
     raise RuntimeError("should have returned the value already")
 
+
+def rank_liner_zombie(map: Map, zombie: Zombie, depth: int) -> float:
+    curr_point = Vec2(x=zombie.x, y=zombie.y)
+    direction = get_direction(zombie.direction)
+
+    res_score = 0.0
+    curr_score = zombie.attack
+    linear_coeff = 1 / depth
+    delta = curr_score * linear_coeff
+
+    faced_base = False
+
+    last_depth_remain = zombie.speed
+    depth_remain = depth
+
+    for i in range(depth):
+        for j in range(zombie.speed):
+            if not map.bounds.is_point_inside(curr_point):
+                return 0.0
+            if map.tiles[curr_point.y][curr_point.x] == TileType.BASE:
+                faced_base = True
+                depth_remain -= i + 1
+                last_depth_remain -= j + 1
+                break
+            curr_point += direction
+        if faced_base:
+            break
+        curr_score -= delta
+    
+    if not faced_base:
+        return 0.0
+    
+    for _ in range(last_depth_remain):
+        if (not map.bounds.is_point_inside(curr_point) or
+            map.tiles[curr_point.y][curr_point.x] != TileType.BASE):
+            return res_score
+        res_score += curr_score
+        curr_point += direction
+    curr_score -= delta
+    
+    for _ in range(depth_remain):
+        for _ in range(zombie.speed):
+            if (not map.bounds.is_point_inside(curr_point) or
+                map.tiles[curr_point.y][curr_point.x] != TileType.BASE):
+                return res_score
+            res_score += curr_score
+            curr_point += direction
+        curr_score -= delta
+    
+    return res_score
+
+def rank_juggernaut_zombie(map: Map, zombie: Zombie, depth: int) -> float:
+    curr_point = Vec2(x=zombie.x, y=zombie.y)
+    direction = get_direction(zombie.direction)
+
+    res_score = 0.0
+    curr_score = zombie.attack
+    linear_coeff = 1 / depth
+    delta = curr_score * linear_coeff
+
+    faced_base = False
+
+    last_depth_remain = zombie.speed
+    depth_remain = depth
+
+    for i in range(depth):
+        for j in range(zombie.speed):
+            if not map.bounds.is_point_inside(curr_point):
+                return 0.0
+            if map.tiles[curr_point.y][curr_point.x] == TileType.BASE:
+                faced_base = True
+                depth_remain -= i + 1
+                last_depth_remain -= j + 1
+                break
+            curr_point += direction
+        if faced_base:
+            break
+        curr_score -= delta
+    
+    if not faced_base:
+        return 0.0
+    
+    for _ in range(last_depth_remain):
+        if not map.bounds.is_point_inside(curr_point):
+            return res_score
+        if map.tiles[curr_point.y][curr_point.x] == TileType.BASE:
+            res_score += curr_score
+        curr_point += direction
+    curr_score -= delta
+    
+    for _ in range(depth_remain):
+        for _ in range(zombie.speed):
+            if not map.bounds.is_point_inside(curr_point):
+                return res_score
+            if map.tiles[curr_point.y][curr_point.x] == TileType.BASE:
+                res_score += curr_score
+            curr_point += direction
+        curr_score -= delta
+    
+    return res_score
+
+def rank_knight_zombie(map: Map, zombie: Zombie, depth: int) -> float:
+    
 
 def rank_zombies(map: Map, zombies: List[Zombie], depth: int) -> List[Zombie]:
     result = []
