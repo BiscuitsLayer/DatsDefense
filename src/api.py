@@ -1,5 +1,6 @@
 import datetime
 import os
+import time
 import requests
 
 from typing import Any, Dict, List, Optional, Tuple
@@ -82,7 +83,11 @@ def complete_action(planner: Planner):
     body = {k: v for k, v in body.items() if v is not None}
     resp = make_request("POST", f"play/zombidef/command", body=body)
     if resp:
-        return resp.json()
+        resp_json = resp.json()
+        while "errors" in resp_json and resp_json["errors"] and "next" in resp_json["errors"][0]:
+            time.sleep(1)
+            resp = make_request("POST", f"play/zombidef/command", body=body)
+            resp_json = resp.json()
     else:
         raise Exception("Request failed")
 
