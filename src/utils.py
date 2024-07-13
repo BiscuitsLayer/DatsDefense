@@ -1,4 +1,5 @@
 import os
+import sys
 import logging
 from src.models import Base, Vec2, NeighborType
 
@@ -11,9 +12,14 @@ def get_logger(name):
     ch = logging.StreamHandler()
     if os.environ.get("LOGFILE", None):
         filename = os.environ["LOGFILE"] 
-        ch = logging.FileHandler(filename)
+        file = logging.FileHandler(filename)
+
+    console = logging.StreamHandler(stream=sys.stdout)
+
     logger.setLevel(logging.DEBUG)
-    logger.addHandler(ch)
+    logger.addHandler(file)
+    logger.addHandler(console)
+
     return logger
 
 
@@ -27,7 +33,6 @@ def can_attack(loc: Vec2, bases: list[Base]):
             possible_bases.append(base.id)
 
     return possible_bases
-
 
 
 def get_neighbor(loc: Vec2, type: NeighborType):

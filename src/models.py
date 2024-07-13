@@ -26,6 +26,9 @@ class Vec2(BaseModel):
     x: int
     y: int
 
+    def __hash__(self):
+        return hash(str(self))
+    
     def __add__(self, other):
         if not isinstance(other, Vec2):
             raise ValueError("Operand must be instance of Vec2")
@@ -171,4 +174,3 @@ class Map:
 
         down_right.x = max(down_right.x, new_point.x)
         down_right.y = max(down_right.y, new_point.y)
-        

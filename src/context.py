@@ -1,5 +1,5 @@
-from api import get_dynamic_objects, get_static_objects
-
+from src.api import get_dynamic_objects, get_static_objects
+from src.models import *
 
 class Singleton(type):
     _instances = {}
@@ -11,13 +11,12 @@ class Singleton(type):
 
 class Context(metaclass=Singleton):
     def __init__(self):
-        self.bases = None
-        self.enemy_bases = None
-        self.zombies = None
+        self.bases: list[Base] = None
+        self.enemy_bases: list[EnemyBase] = None
+        self.zombies: list[Zombie] = None
 
         # No need to update zpots, because they are static (const)
-        # self.zpots = get_static_objects()
+        self.zpots: list[ZombieSpot] = get_static_objects()
 
     def update(self):
-        print("Context updated")
-        # self.bases, self.enemy_bases, self.zombies = get_dynamic_objects()
+        self.bases, self.enemy_bases, self.zombies = get_dynamic_objects()
