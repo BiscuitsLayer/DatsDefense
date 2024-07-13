@@ -35,10 +35,6 @@ def can_attack(loc: Vec2, bases: list[Base]):
 
     return possible_bases
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 9053c0fcef3ad36df4080c1a7d783cb13c933e75
 def get_neighbor(loc: Vec2, type: NeighborType):
     match type:
         case NeighborType.TOP:
@@ -71,7 +67,7 @@ def get_direction(dir: str) -> Vec2:
     raise ValueError("wrong direction name: must be up, down, left or right")
 
 def get_tile_type(loc: Vec2, map: Map):
-    return map.tiles[loc.x][loc.y]
+    return map.tiles[loc.y][loc.x]
 
 def can_build_here(loc: Vec2, map: Map, zombies: List[Zombie]):
     direct_neighbours = [get_tile_type(get_neighbor(loc, type_)) for type_ \
@@ -93,7 +89,6 @@ def can_build_here(loc: Vec2, map: Map, zombies: List[Zombie]):
 
 def add_build_plan(loc: Vec2):
     pass
-<<<<<<< HEAD
 
 def sign(num):
     return -1 if num < 0 else 1
@@ -136,24 +131,28 @@ def enemies_n_build_plan(n: int, closest_enemy_coords: Vec2, sorted_closest_to_e
                 closest_to_enemy_ind += 1
     return build_coords_list
 
-def no_enemies_n_build_plan(n: int, closest_enemy_coords: Vec2, sorted_closest_to_enemy_coords: List[Vec2], zombies: List[Zombie]):
+def no_enemies_n_build_plan(n: int, bases_coords: List[Vec2], geom_center: Vec2, zombies: List[Vec2], zpots: List[ZombieSpot]):
     build_coords_list = list()
-    closest_to_enemy_ind = len(sorted_closest_to_enemy_coords)
+    zpots_center = Vec2(x=sum([zpot.x for zpot in zpots])/len(zpots), y=sum([zpot.y for zpot in zpots])/len(zpots))
+    sorted_to_zpots_center_coords = sorted(bases_coords, key=lambda x: dist(x, zpots_center))
+    from_center_build_direction = sum([geom_center - x for x in zpots])
+    from_center_build_direction = Vec2(from_center_build_direction.x/len(zpots), from_center_build_direction.y/len(zpots))
     build_coords_list = list()
+    furthest_to_zpots_ind = len(sorted_to_zpots_center_coords)
     for _ in range(0, n):
         add = False
-        if closest_to_enemy_ind <= 0:
+        if furthest_to_zpots_ind <= 0:
             break
-        while add != True or closest_to_enemy_ind >= 0:
-            closest_to_enemy_ind -= 1
-            closest_to_enemy_coords = sorted_closest_to_enemy_coords[closest_to_enemy_ind]
-            build_direction = closest_enemy_coords - closest_to_enemy_coords
+        while add != True or furthest_to_zpots_ind >= 0:
+            furthest_to_zpots_ind -= 1
+            furthest_to_zpots_center_coords = sorted_to_zpots_center_coords[furthest_to_zpots_ind]
+            build_direction = from_center_build_direction - geom_center + furthest_to_zpots_center_coords
             ax = (abs(build_direction.x) > abs(build_direction.y))*1
             dir_ = Vec2(x=sign(build_direction.x)*[1,0][ax], y=sign(build_direction.y)*[0,1][ax])
-            closest_to_enemy_coords, add = check_build_dir(dir_, build_direction, closest_to_enemy_coords, build_coords_list, zombies)
+            furthest_to_zpots_center_coords, add = check_build_dir(dir_, build_direction, furthest_to_zpots_center_coords, build_coords_list, zombies)
             if add:
-                sorted_closest_to_enemy_coords.append(closest_to_enemy_coords)
-                closest_to_enemy_ind += 1
+                sorted_to_zpots_center_coords.append(furthest_to_zpots_center_coords)
+                furthest_to_zpots_ind += 1
     return build_coords_list
 
 def get_build_plan(n_bases, bases: List[Base], enemy_bases: List[EnemyBase], map: Map, zombies: List[Zombie]):
@@ -167,10 +166,6 @@ def get_build_plan(n_bases, bases: List[Base], enemy_bases: List[EnemyBase], map
         build_coords_list = enemies_n_build_plan(n_bases, closest_enemy_coords, sorted_closest_to_enemy_coords, zombies)
 
         return build_coords_list
-    build_coords_list = no_enemies_n_build_plan(n_bases, zombies)
+    build_coords_list = no_enemies_n_build_plan(n_bases, bases_coords, geom_center, zombies)
 
     return build_coords_list
-
-        
-=======
->>>>>>> 9053c0fcef3ad36df4080c1a7d783cb13c933e75
