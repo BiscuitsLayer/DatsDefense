@@ -20,7 +20,6 @@ servers = {
     "MAIN": "https://games.datsteam.dev/"
 }
 
-
 def make_request(
         method: str, endpoint: str, body: Optional[Dict[str, Any]] = None, 
         params: Optional[Dict[str, Any]] = None
@@ -31,16 +30,13 @@ def make_request(
     api = servers[os.getenv('SERVER')]
     url = f"{api}{endpoint}"
 
-    logger.info(datetime.datetime.now())
-    logger.info(f"Request for URL: {url} with body: {body}")
     resp = requests.request(method, url, headers=headers, json=body, params=params)
 
     if resp.status_code == status.HTTP_200_OK:
-        logger.debug("Request success\n")
+        logger.debug(f"{datetime.datetime.now()}\n{method} Request for URL: {url} with body: {body}\nRequest success, body: {resp.text}\n")
         return resp
     else:
-        logger.error(f"Request failed with status: {resp.status_code}")
-        logger.error(f"Error text: {resp.text}")
+        logger.error(f"{datetime.datetime.now()}\n{method} Request for URL: {url} with body: {body}\nRequest failed with status: {resp.status_code}\nError text: {resp.text}")
 
 
 def participate() -> Tuple[str, bool]:
@@ -79,10 +75,11 @@ def complete_action(planner: Planner):
         # NOTE: Generator expression inside list comprehension (WOW)
         # Do not touch this piece of code below is super cool
         # Written by Serega Vinogradov Inc. 2024
-        "attack": [plan for plan in ((planner.get_next_attack_plan()) for _ in range(MAX_ATTACKS_PER_ITER)) if plan is not None],
-        "build": [plan for plan in (planner.get_next_build_plan() for _ in range(MAX_BUILDS_PER_ITER)) if plan is not None],
-        "moveBase": [plan for plan in (planner.get_next_move_base_plan() or []) if plan is not None],
+        "attack": [plan.model_dump() for plan in ((planner.get_next_attack_plan()) for _ in range(MAX_ATTACKS_PER_ITER)) if plan is not None],
+        "build": [plan.model_dump() for plan in (planner.get_next_build_plan() for _ in range(MAX_BUILDS_PER_ITER)) if plan is not None],
+        "moveBase": planner.get_next_move_base_plan(),
     }
+    body = {k: v for k, v in body.items() if v is not None}
     resp = make_request("POST", f"play/zombidef/command", body=body)
     if resp:
         return resp.json()
@@ -104,9 +101,9 @@ def get_dynamic_objects():
     resp = make_request("GET", f"play/zombidef/units")
     if resp:
         resp_json = resp.json()
-        bases = [Base(**base) for base in resp_json['base']]
-        enemy_bases = [EnemyBase(**enemy_base) for enemy_base in resp_json['enemyBlocks']]
-        zombies = [Zombie(**zombie) for zombie in resp_json['zombies']]
+        bases = [Base(**base) for base in (resp_json['base'] or [])]
+        enemy_bases = [EnemyBase(**enemy_base) for enemy_base in (resp_json['enemyBlocks'] or [])]
+        zombies = [Zombie(**zombie) for zombie in (resp_json['zombies'] or [])]
         return bases, enemy_bases, zombies
     else:
         raise Exception("Request failed")
