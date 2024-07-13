@@ -201,6 +201,5 @@ def rank_zombies(map: Map, zombies: List[Zombie], depth: int) -> List[str]:
     sorted(zombie_score_id, key=lambda pair: pair[0], reverse=True)
     return [record[1] for record in zombie_score_id]
 
-    
 def zombie_order() -> List[str]:
     pass
