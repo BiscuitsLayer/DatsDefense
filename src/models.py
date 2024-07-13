@@ -16,9 +16,28 @@ class NeighborType(Enum):
     BOTTOM_RIGHT = auto(),
     BOTTOM = auto()
 
+class DirectionType(Enum):
+    UP = "up"
+    DOWN = "down"
+    LEFT = "left"
+    RIGHT = "right"
+
 class Vec2(BaseModel):
     x: int
     y: int
+
+    def __hash__(self):
+        return hash(str(self))
+    
+    def __add__(self, other):
+        if not isinstance(other, Vec2):
+            raise ValueError("Operand must be instance of Vec2")
+        return Vec2(self.x + other.x, self.y + other.y)
+    
+    def __mul__(self, scalar):
+        if not isinstance(scalar, int):
+            raise ValueError("Operand must be a numeric value")
+        return Vec2(self.x * scalar, self.y * scalar)
 
 class Rect:
     top_left: Vec2
@@ -27,6 +46,12 @@ class Rect:
     def __init__(self, top_left: Vec2, size: Vec2):
         self.top_left = top_left
         self.size = size
+
+    def is_point_inside(self, point: Vec2) -> bool:
+        return (
+            point.x >= self.top_left.x and point.x < self.top_left.x + self.size.x and
+            point.y >= self.top_left.y and point.y < self.top_left.y + self.size.y
+        )
 
 class Attack(BaseModel):
     blockId: str
@@ -85,6 +110,7 @@ class TileType(Enum):
     CONTROL_CENTER = auto()
     ENEMY_BASE = auto()
     WALL = auto()
+    ZOMBIE_GTOR = auto()
 
 
 class Map:
@@ -122,6 +148,8 @@ class Map:
         for zpot in zpots:
             if zpot.type == "wall":
                 self.tiles[base.y][base.x] = TileType.WALL
+            if zpot.type == "default":
+                self.tiles[base.y][base.x] = TileType.ZOMBIE_GTOR
 
     def _calc_bounds(self, bases, enemy_bases, zombies, zpots):
         top_left = Vec2(x=0, y=0)
@@ -146,4 +174,3 @@ class Map:
 
         down_right.x = max(down_right.x, new_point.x)
         down_right.y = max(down_right.y, new_point.y)
-        

@@ -1,4 +1,5 @@
 import os
+import sys
 import logging
 from src.models import Base, Vec2, NeighborType, Map, TileType, Zombie, EnemyBase
 from typing import List
@@ -12,9 +13,14 @@ def get_logger(name):
     ch = logging.StreamHandler()
     if os.environ.get("LOGFILE", None):
         filename = os.environ["LOGFILE"] 
-        ch = logging.FileHandler(filename)
+        file = logging.FileHandler(filename)
+
+    console = logging.StreamHandler(stream=sys.stdout)
+
     logger.setLevel(logging.DEBUG)
-    logger.addHandler(ch)
+    logger.addHandler(file)
+    logger.addHandler(console)
+
     return logger
 
 
@@ -29,24 +35,40 @@ def can_attack(loc: Vec2, bases: list[Base]):
 
     return possible_bases
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9053c0fcef3ad36df4080c1a7d783cb13c933e75
 def get_neighbor(loc: Vec2, type: NeighborType):
     match type:
         case NeighborType.TOP:
-            return Vec2(x=loc.x, y=loc.y+1)
+            return Vec2(x=loc.x, y=loc.y-1)
         case NeighborType.TOP_LEFT:
-            return Vec2(x=loc.x-1, y=loc.y+1)
+            return Vec2(x=loc.x-1, y=loc.y-1)
         case NeighborType.TOP_RIGHT:
-            return Vec2(x=loc.x+1, y=loc.y+1)
+            return Vec2(x=loc.x+1, y=loc.y-1)
         case NeighborType.LEFT:
             return Vec2(x=loc.x-1, y=loc.y)
         case NeighborType.RIGHT:
             return Vec2(x=loc.x+1, y=loc.y)
         case NeighborType.BOTTOM_LEFT:
-            return Vec2(x=loc.x-1, y=loc.y-1)
+            return Vec2(x=loc.x-1, y=loc.y+1)
         case NeighborType.BOTTOM_RIGHT:
-            return Vec2(x=loc.x+1, y=loc.y-1)
+            return Vec2(x=loc.x+1, y=loc.y+1)
         case NeighborType.BOTTOM:
-            return Vec2(x=loc.x, y=loc.y-1)
+            return Vec2(x=loc.x, y=loc.y+1)
+        
+def get_direction(dir: str) -> Vec2:
+    if dir == "up":
+        return Vec2(x=0, y=-1)
+    if dir == "down":
+        return Vec2(x=0, y=1)
+    if dir == "left":
+        return Vec2(x=-1, y=0)
+    if dir == "right":
+        return Vec2(x=1, y=0)
+    
+    raise ValueError("wrong direction name: must be up, down, left or right")
 
 def get_tile_type(loc: Vec2, map: Map):
     return map.tiles[loc.x][loc.y]
@@ -71,6 +93,7 @@ def can_build_here(loc: Vec2, map: Map, zombies: List[Zombie]):
 
 def add_build_plan(loc: Vec2):
     pass
+<<<<<<< HEAD
 
 def sign(num):
     return -1 if num < 0 else 1
@@ -149,3 +172,5 @@ def get_build_plan(n_bases, bases: List[Base], enemy_bases: List[EnemyBase], map
     return build_coords_list
 
         
+=======
+>>>>>>> 9053c0fcef3ad36df4080c1a7d783cb13c933e75
