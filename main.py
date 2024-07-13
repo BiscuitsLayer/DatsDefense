@@ -1,13 +1,11 @@
 import os
 from dotenv import load_dotenv
-
-from src.const import ITER_TIME
-from src.planner import IntervalRunner, Planner
-from src.models import Build, Vec2, Attack
 load_dotenv()
 
 from src.api import *
-from src.drawer import draw_map
+from src.const import ITER_TIME
+from src.planner import IntervalRunner, Planner
+from src.models import Build, Vec2, Attack
 
 def main():
     # Verify token and register for a round
@@ -35,17 +33,13 @@ def main():
             ###
 
             # Sample logic can be done like that
-            pts = [
-                Attack(target=Vec2(x=1, y=1), blockId="test"),
-                Attack(target=Vec2(x=1, y=2), blockId="test"),
-                Attack(target=Vec2(x=2, y=2), blockId="test"),
-                Attack(target=Vec2(x=2, y=3), blockId="test"),
-                Attack(target=Vec2(x=3, y=3), blockId="test"),
-            ]
+            for base in (context.bases or []):
+                attack = Attack(target=Vec2(x=base.x+5, y=base.y+5), blockId=base.id)
+                planner.plan_attack(attack)
 
-            for pt in pts:
-                planner.plan_attack(pt)
-                planner.plan_build(Build(x=pt.target.x, y=pt.target.y))
+            for base in (context.bases or []):
+                build = Build(x=base.x+1, y=base.y+1)
+                planner.plan_build(build)
 
         except KeyboardInterrupt:
             print("Shutting down...")
