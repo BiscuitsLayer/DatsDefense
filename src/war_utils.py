@@ -3,6 +3,7 @@ from math import sqrt
 from typing import List
 from models import Vec2, Base, Zombie, Map, TileType
 from utils import get_direction
+from knight_offsets import KNIGHT_OFFSETS
 
 def dist_sqr(p1: Vec2, p2: Vec2):
     return (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2
@@ -164,12 +165,19 @@ def rank_juggernaut_zombie(map: Map, zombie: Zombie, depth: int) -> float:
     
     return res_score
 
+
 def rank_knight_zombie(map: Map, zombie: Zombie, depth: int) -> float:
-    
+    assert depth <= 5, "depth is too big: 5 is max"
+
+    n_strikes = 0
+    for pos in KNIGHT_OFFSETS[depth - 1]:
+        if map.tiles[pos.y][pos.x] == TileType.BASE:
+            n_strikes += 1
+
+    return sum(i / n_strikes * zombie.attack for i in range(n_strikes, 0, -1))
 
 def rank_zombies(map: Map, zombies: List[Zombie], depth: int) -> List[Zombie]:
     result = []
     
-
 def zombie_order() -> List[str]:
     pass
