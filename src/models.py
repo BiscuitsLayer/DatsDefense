@@ -30,6 +30,11 @@ class Vec2(BaseModel):
         if not isinstance(other, Vec2):
             raise ValueError("Operand must be instance of Vec2")
         return Vec2(self.x + other.x, self.y + other.y)
+    
+    def __mul__(self, scalar):
+        if not isinstance(scalar, int):
+            raise ValueError("Operand must be a numeric value")
+        return Vec2(self.x * scalar, self.y * scalar)
 
 class Rect:
     top_left: Vec2
@@ -38,6 +43,12 @@ class Rect:
     def __init__(self, top_left: Vec2, size: Vec2):
         self.top_left = top_left
         self.size = size
+
+    def is_point_inside(self, point: Vec2) -> bool:
+        return (
+            point.x >= self.top_left.x and point.x < self.top_left.x + self.size.x and
+            point.y >= self.top_left.y and point.y < self.top_left.y + self.size.y
+        )
 
 class Attack(BaseModel):
     blockId: str
