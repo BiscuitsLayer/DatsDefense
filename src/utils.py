@@ -70,14 +70,17 @@ def get_tile_type(loc: Vec2, map: Map):
     return map.tiles[loc.y][loc.x]
 
 def can_build_here(loc: Vec2, map: Map, zombies: List[Zombie]):
+    spot_free = (get_tile_type(loc) not in [TileType.BASE, TileType.ENEMY_BASE, TileType.WALL, TileType.ZOMBIE_GTOR]) and (loc not in zombies)
+    if not spot_free:
+        return False
+    
     direct_neighbours = [get_tile_type(get_neighbor(loc, type_)) for type_ \
                          in [NeighborType.TOP, NeighborType.LEFT, NeighborType.RIGHT, NeighborType.BOTTOM]]
-    no_bad_direct_neighbours = (TileType.ENEMY_BASE not in direct_neighbours) and (TileType.WALL not in direct_neighbours)
+    no_bad_direct_neighbours = sum([type_ not in direct_neighbours for type_ in [TileType.ZOMBIE_GTOR, TileType.WALL, TileType.ENEMY_BASE]]) == 0
     if not no_bad_direct_neighbours:
         return False
     
-    spot_free = (get_tile_type(loc) not in [TileType.BASE, TileType.ENEMY_BASE, TileType.WALL]) and (loc not in zombies)
-    if not spot_free:
+    if not ((loc.x > 0 or loc.y > 0) and (loc.x < map.bounds.size.x or loc.y < map.bounds.size.y)):
         return False
     
     diagonal_neighbours = [get_tile_type(get_neighbor(loc, type_)) for type_ \
@@ -86,6 +89,7 @@ def can_build_here(loc: Vec2, map: Map, zombies: List[Zombie]):
     if not no_diagonal_enemy:
         return False
     return True
+
 
 def add_build_plan(loc: Vec2):
     pass
