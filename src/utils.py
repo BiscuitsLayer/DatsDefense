@@ -48,6 +48,18 @@ def get_neighbor(loc: Vec2, type: NeighborType):
             return Vec2(x=loc.x+1, y=loc.y-1)
         case NeighborType.BOTTOM:
             return Vec2(x=loc.x, y=loc.y-1)
+        
+def get_direction(dir: str) -> Vec2:
+    if dir == "up":
+        return Vec2(x=0, y=-1)
+    if dir == "down":
+        return Vec2(x=0, y=1)
+    if dir == "left":
+        return Vec2(x=-1, y=0)
+    if dir == "right":
+        return Vec2(x=1, y=0)
+    
+    raise ValueError("wrong direction name: must be up, down, left or right")
 
 
 def add_build_plan(loc: Vec2):

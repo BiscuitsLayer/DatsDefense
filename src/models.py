@@ -16,9 +16,20 @@ class NeighborType(Enum):
     BOTTOM_RIGHT = auto(),
     BOTTOM = auto()
 
+class DirectionType(Enum):
+    UP = "up"
+    DOWN = "down"
+    LEFT = "left"
+    RIGHT = "right"
+
 class Vec2(BaseModel):
     x: int
     y: int
+
+    def __add__(self, other):
+        if not isinstance(other, Vec2):
+            raise ValueError("Operand must be instance of Vec2")
+        return Vec2(self.x + other.x, self.y + other.y)
 
 class Rect:
     top_left: Vec2
@@ -85,6 +96,7 @@ class TileType(Enum):
     CONTROL_CENTER = auto()
     ENEMY_BASE = auto()
     WALL = auto()
+    ZOMBIE_GTOR = auto()
 
 
 class Map:
@@ -122,6 +134,8 @@ class Map:
         for zpot in zpots:
             if zpot.type == "wall":
                 self.tiles[base.y][base.x] = TileType.WALL
+            if zpot.type == "default":
+                self.tiles[base.y][base.x] = TileType.ZOMBIE_GTOR
 
     def _calc_bounds(self, bases, enemy_bases, zombies, zpots):
         top_left = Vec2(x=0, y=0)
