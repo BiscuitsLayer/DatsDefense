@@ -63,9 +63,9 @@ def main():
                             planner.plan_build(build)
 
             attacks = heal_zombies(
-                n_to_heal=10,
                 bases=context.bases,
-                zombies=context.zombies
+                zombies=context.zombies,
+                map=map
             )
             attacks += attack_enemies(
                 n_to_attack=5,

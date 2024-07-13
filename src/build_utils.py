@@ -4,7 +4,7 @@ import logging
 from src.bfs import build_route
 from src.models import Base, EnemyBase, Map, TileType, Vec2, NeighborType, Zombie, Attack
 from src.utils import get_neighbor
-from src.war_utils import dist
+from src.war_utils import dist, zombie_order
 
 def sign(num):
     return -1 if num < 0 else 1
@@ -83,12 +83,9 @@ def attack_enemies(n_to_attack: int, enemy_bases_coords: list[Vec2], bases: list
 
     return attacks
 
-def heal_zombies(n_to_heal, bases: list[Base], zombies: list[Zombie]):
+def heal_zombies(bases: list[Base], zombies: list[Zombie], map: Map):
+    order = zombie_order(map, zombies, bases, 8)
     heals = []
-    zombies_locs = [Vec2(x=zombie.x, y=zombie.y) for zombie in zombies]
-    for base in bases:
-        for zombies_loc in zombies_locs:
-            if dist(zombies_loc, Vec2(x=base.x, y=base.y)) < base.range:
-                heals.append(Attack(blockId=base.id, target=zombies_loc))
-
+    for item in order:
+        heals.append(Attack(blockId=item[0], target=item[1]))
     return heals
