@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 from src.const import ITER_TIME
 from src.planner import IntervalRunner, Planner
-from src.models import Vec2, DirectionType
+from src.models import Vec2
 load_dotenv()
 
 from api import *
@@ -17,10 +17,6 @@ def main():
     # if not participating:
     #     print("Exiting")
     #     return None
-
-    test_dir = "right"
-    if test_dir == DirectionType.RIGHT.value:
-        print("yes")
     
     # Create context to avoid doing many requests for a single iteration
     context = Context()
