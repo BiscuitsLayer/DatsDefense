@@ -93,28 +93,15 @@ def check_build_dir(dir_: Vec2, build_direction: Vec2, closest_to_enemy_coords: 
         closest_to_enemy_coords = potential_build_coords
     return closest_to_enemy_coords, add
 
-def get_build_plan(bases: List[Base], enemy_bases: List[EnemyBase], map: Map, zombies: List[Zombie]):
-    # bases, enemy_bases, zombies = ... #get_dynamic_objects()
-    # world = ... #get_static_objects()
-    if len(enemy_bases) > 0:
-        enemy_coords = [Vec2(x=base.x, y=base.y) for base in enemy_bases]
-
-    bases_coords = [Vec2(x=base.x, y=base.y) for base in bases]
-
-    geom_center = Vec2(x=sum([point.x for point in bases_coords])/len(bases_coords),
-                   y=sum([point.y for point in bases_coords])/len(bases_coords))
-    closest_enemy_coords = sorted(enemy_coords, key=lambda x: dist(x, geom_center))[0]
-    # dists_to_enemy = [dist(geom_center, enemy_coord) for enemy_coord in enemy_coords]
-    # closest_enemy_coords = enemy_coords[min(range(len(dists_to_enemy)), key=dists_to_enemy.__getitem__)]
-    # dists_to_closest_enemy = [dist(closest_enemy_coords, base_coord) for base_coord in bases_coords]
-    sorted_closest_to_enemy_coords = sorted(bases_coords, key=lambda x: dist(x, closest_enemy_coords), reverse=True)
-    # closest_to_enemy_coords = bases_coords[min(range(len(dists_to_closest_enemy)), key=dists_to_closest_enemy.__getitem__)]
-    closest_to_enemy_ind = len(sorted_closest_to_enemy_coords)
-    # build_direction = [build_direction.x, build_direction.y]
+def enemies_n_build_plan(n: int, closest_enemy_coords: Vec2, sorted_closest_to_enemy_coords: List[Vec2], zombies: List[Zombie]):
     build_coords_list = list()
-    for _ in range(0, 3):
+    closest_to_enemy_ind = len(sorted_closest_to_enemy_coords)
+    build_coords_list = list()
+    for _ in range(0, n):
         add = False
-        while add != True:
+        if closest_to_enemy_ind <= 0:
+            break
+        while add != True or closest_to_enemy_ind >= 0:
             closest_to_enemy_ind -= 1
             closest_to_enemy_coords = sorted_closest_to_enemy_coords[closest_to_enemy_ind]
             build_direction = closest_enemy_coords - closest_to_enemy_coords
@@ -124,43 +111,40 @@ def get_build_plan(bases: List[Base], enemy_bases: List[EnemyBase], map: Map, zo
             if add:
                 sorted_closest_to_enemy_coords.append(closest_to_enemy_coords)
                 closest_to_enemy_ind += 1
-        # build_coords, build_direction, closest_to_enemy_coords, add, checked = check_build_ax_direction(ax=0, build_direction, closest_to_enemy_coords, zombies)
-            
+    return build_coords_list
 
-        # if abs(build_direction[0]) > abs(build_direction[1]):
-        #     build_coords = [closest_to_enemy_coords[0] + sign(build_direction[0]),
-        #                     closest_to_enemy_coords[1]]
-        #     if can_build_here(Vec2(x=build_coords[0], y=build_coords[1]), map, zombies):
-        #         build_coords_list.append(Vec2(x=build_coords[0], y=build_coords[1]))
-        #         closest_to_enemy_coords = build_coords
-        #         build_direction = [build_direction[0] - sign(build_direction[0]),
-        #                            build_direction[1]]
-        #         continue
-        #     not_checked_go_x = False
-        # else:
-        #     build_coords = [closest_to_enemy_coords[0],
-        #                     closest_to_enemy_coords[1]] + sign(build_coords[0]) 
-        #     if can_build_here(Vec2(x=build_coords[0], y=build_coords[1]), map, zombies):
-        #         build_coords_list.append(Vec2(x=build_coords[0], y=build_coords[1]))
-        #         closest_to_enemy_coords = build_coords
-        #         build_direction = [build_direction[0],
-        #                            build_direction[1] - sign(build_direction[0])]
-        #         continue
-        #     if not_checked_go_x:
-        #         build_coords = [closest_to_enemy_coords[0] + sign(build_direction[0]),
-        #                         closest_to_enemy_coords[1]]
-        #         if can_build_here(Vec2(x=build_coords[0], y=build_coords[1]), map, zombies):
-        #             build_coords_list.append(Vec2(x=build_coords[0], y=build_coords[1]))
-        #             closest_to_enemy_coords = build_coords
-        #             build_direction = [build_direction[0] - sign(build_direction[0]),
-        #                             build_direction[1]]
-        #             continue
-        #     closest_to_enemy_ind +=1
-        #     if closest_to_enemy_ind == len(sorted_closest_to_enemy_coords):
-        #         break
-        #     closest_to_enemy_coords = sorted_closest_to_enemy_coords[closest_to_enemy_ind]
-        #     build_direction = [(closest_enemy_coords[0] - closest_to_enemy_coords[0]),
-        #                (closest_enemy_coords[0] - closest_to_enemy_coords[0])]
+def no_enemies_n_build_plan(n: int, closest_enemy_coords: Vec2, sorted_closest_to_enemy_coords: List[Vec2], zombies: List[Zombie]):
+    build_coords_list = list()
+    closest_to_enemy_ind = len(sorted_closest_to_enemy_coords)
+    build_coords_list = list()
+    for _ in range(0, n):
+        add = False
+        if closest_to_enemy_ind <= 0:
+            break
+        while add != True or closest_to_enemy_ind >= 0:
+            closest_to_enemy_ind -= 1
+            closest_to_enemy_coords = sorted_closest_to_enemy_coords[closest_to_enemy_ind]
+            build_direction = closest_enemy_coords - closest_to_enemy_coords
+            ax = (abs(build_direction.x) > abs(build_direction.y))*1
+            dir_ = Vec2(x=sign(build_direction.x)*[1,0][ax], y=sign(build_direction.y)*[0,1][ax])
+            closest_to_enemy_coords, add = check_build_dir(dir_, build_direction, closest_to_enemy_coords, build_coords_list, zombies)
+            if add:
+                sorted_closest_to_enemy_coords.append(closest_to_enemy_coords)
+                closest_to_enemy_ind += 1
+    return build_coords_list
+
+def get_build_plan(n_bases, bases: List[Base], enemy_bases: List[EnemyBase], map: Map, zombies: List[Zombie]):
+    if len(enemy_bases) > 0:
+        enemy_coords = [Vec2(x=base.x, y=base.y) for base in enemy_bases]
+        bases_coords = [Vec2(x=base.x, y=base.y) for base in bases]
+        geom_center = Vec2(x=sum([point.x for point in bases_coords])/len(bases_coords),
+                    y=sum([point.y for point in bases_coords])/len(bases_coords))
+        closest_enemy_coords = sorted(enemy_coords, key=lambda x: dist(x, geom_center))[0]
+        sorted_closest_to_enemy_coords = sorted(bases_coords, key=lambda x: dist(x, closest_enemy_coords), reverse=True)
+        build_coords_list = enemies_n_build_plan(n_bases, closest_enemy_coords, sorted_closest_to_enemy_coords, zombies)
+
+        return build_coords_list
+    build_coords_list = no_enemies_n_build_plan(n_bases, zombies)
 
     return build_coords_list
 
