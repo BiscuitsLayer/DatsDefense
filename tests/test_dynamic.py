@@ -1,13 +1,8 @@
 import json
 
 from src.api import get_dynamic_objects
-<<<<<<< HEAD
 from src.models import Base, EnemyBase, Vec2, Zombie, ZombieSpot, Map
 from src.utils import can_attack, get_build_plan, can_build_here, get_tile_type, get_neighbor
-=======
-from src.models import Base, EnemyBase, Vec2, Zombie
-from src.utils import can_attack
->>>>>>> 9053c0fcef3ad36df4080c1a7d783cb13c933e75
 
 sample_json = """
 {

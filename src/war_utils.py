@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 from DatsDefense.src.api import get_dynamic_objects
-=======
-from src.api import get_dynamic_objects
->>>>>>> 9053c0fcef3ad36df4080c1a7d783cb13c933e75
 from math import sqrt
 from typing import List
 from models import Vec2, Base, Zombie, Map, TileType
