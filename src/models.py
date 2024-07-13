@@ -26,6 +26,9 @@ class Vec2(BaseModel):
     x: int
     y: int
 
+    def __hash__(self):
+        return hash(str(self))
+    
     def __add__(self, other):
         if not isinstance(other, Vec2):
             raise ValueError("Operand must be instance of Vec2")

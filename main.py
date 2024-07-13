@@ -6,7 +6,7 @@ from src.planner import IntervalRunner, Planner
 from src.models import Vec2
 load_dotenv()
 
-from api import *
+from src.api import *
 from src.drawer import draw_map
 
 def main():
