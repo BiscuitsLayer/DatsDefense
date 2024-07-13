@@ -3,7 +3,7 @@ import time
 from dotenv import load_dotenv
 
 from src.bfs import build_route, can_build_here
-from src.build_utils import attack_enemies, build_route_to_enemies
+from src.build_utils import attack_enemies, build_route_to_enemies, heal_zombies
 from src.utils import get_neighbor
 load_dotenv()
 
@@ -41,7 +41,7 @@ def main():
             # ADD ALL LOGIC HERE
             ###
 
-            map = map(context.bases, context.enemy_bases, context.zombies, context.zpots)
+            map = Map(context.bases, context.enemy_bases, context.zombies, context.zpots)
 
             routes_to_enemies = build_route_to_enemies(
                 n_to_build=5,
@@ -53,7 +53,7 @@ def main():
             if routes_to_enemies:
                 best_route = routes_to_enemies[0]
                 for loc in best_route:
-                    build = Build(x=loc.x+1, y=loc.y+1)
+                    build = Build(x=loc.x, y=loc.y)
                     planner.plan_build(build)
             else:
                 for base in context.bases:
@@ -62,7 +62,12 @@ def main():
                             build = Build(x=loc.x, y=loc.y)
                             planner.plan_build(build)
 
-            attacks = attack_enemies(
+            attacks = heal_zombies(
+                n_to_heal=10,
+                bases=context.bases,
+                zombies=context.zombies
+            )
+            attacks += attack_enemies(
                 n_to_attack=5,
                 enemy_bases_coords=[Vec2(x=base.x, y=base.y) for base in context.enemy_bases],
                 bases=context.bases,
@@ -70,8 +75,7 @@ def main():
             if attacks:
                 for attack in attacks:
                     planner.plan_attack(attack)
-            
-                
+
         except KeyboardInterrupt:
             print("Shutting down...")
             post_runner.stop()
