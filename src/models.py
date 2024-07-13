@@ -164,6 +164,9 @@ class Map:
         for zombie in zombies:
             self.__update_bounds_by_point(top_left, down_right, Vec2(x=zombie.x, y=zombie.y))
 
+        for zpot in zpots:
+            self.__update_bounds_by_point(top_left, down_right, Vec2(x=zpot.x, y=zpot.y))
+
         self.bounds.top_left = top_left
         self.bounds.size.x = down_right.x - top_left.x + 1
         self.bounds.size.y = down_right.y - top_left.y + 1
