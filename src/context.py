@@ -1,4 +1,4 @@
-from api import get_dynamic_objects, get_static_objects
+from DatsDefense.src.api import get_dynamic_objects, get_static_objects
 
 
 class Singleton(type):

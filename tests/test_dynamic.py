@@ -1,6 +1,6 @@
 import json
 
-from api import get_dynamic_objects
+from src.api import get_dynamic_objects
 from src.models import Base, EnemyBase, Vec2, Zombie, ZombieSpot, Map
 from src.utils import can_attack, get_build_plan, can_build_here, get_tile_type, get_neighbor
 

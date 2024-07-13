@@ -1,4 +1,4 @@
-from api import get_dynamic_objects
+from DatsDefense.src.api import get_dynamic_objects
 from math import sqrt
 from typing import List
 from models import Vec2, Base, Zombie
@@ -6,8 +6,8 @@ from models import Vec2, Base, Zombie
 def dist_sqr(p1: Vec2, p2: Vec2):
     return (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2
 
-def dist_sqr_casual(p1: List[int], p2: List[int]):
-    return (p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2
+# def dist_sqr_casual(p1: List[int], p2: List[int]):
+#     return (p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2
 
 def dist(p1: Vec2, p2: Vec2):
     return sqrt(dist_sqr(p1, p2))
