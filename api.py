@@ -1,7 +1,7 @@
 import datetime
 import os
 import requests
-from src.utils import get_logger
+
 from typing import Any, Dict, List, Optional, Tuple
 from fastapi import Depends, Response, status
 

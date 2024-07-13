@@ -1,8 +1,8 @@
 import json
 
 from api import get_dynamic_objects
-from src.models import Base, EnemyBase, Vec2, Zombie
-from src.utils import can_attack
+from src.models import Base, EnemyBase, Vec2, Zombie, ZombieSpot, Map
+from src.utils import can_attack, get_build_plan, can_build_here, get_tile_type, get_neighbor
 
 sample_json = """
 {
@@ -88,3 +88,7 @@ print(zombies)
 possible_bases = can_attack(Vec2(x=10, y=10), bases)
 
 print(possible_bases)
+
+zpots = [ZombieSpot(**zombie_spot) for zombie_spot in resp_json['zpots']]
+map = Map(bases, enemy_bases, zombies, zpots)
+print(get_build_plan())
