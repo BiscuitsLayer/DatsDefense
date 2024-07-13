@@ -11,9 +11,9 @@ class Singleton(type):
 
 class Context(metaclass=Singleton):
     def __init__(self):
-        self.bases: list[Base] = None
-        self.enemy_bases: list[EnemyBase] = None
-        self.zombies: list[Zombie] = None
+        self.bases: list[Base] = []
+        self.enemy_bases: list[EnemyBase] = []
+        self.zombies: list[Zombie] = []
 
         # No need to update zpots, because they are static (const)
         self.zpots: list[ZombieSpot] = get_static_objects()

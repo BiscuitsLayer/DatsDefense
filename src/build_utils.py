@@ -82,3 +82,13 @@ def attack_enemies(n_to_attack: int, enemy_bases_coords: list[Vec2], bases: list
                 break
 
     return attacks
+
+def heal_zombies(n_to_heal, bases: list[Base], zombies: list[Zombie]):
+    heals = []
+    zombies_locs = [Vec2(x=zombie.x, y=zombie.y) for zombie in zombies]
+    for base in bases:
+        for zombies_loc in zombies_locs:
+            if dist(zombies_loc, Vec2(x=base.x, y=base.y)) < base.range:
+                heals.append(Attack(blockId=base.id, target=zombies_loc))
+
+    return heals
