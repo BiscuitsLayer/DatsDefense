@@ -2,7 +2,6 @@ from collections import defaultdict
 from math import sqrt
 from typing import List, Tuple, Dict
 
-from src.api import get_dynamic_objects
 from src.models import Vec2, Base, Zombie, Map, TileType
 from src.utils import get_direction
 from src.knight_offsets import KNIGHT_OFFSETS

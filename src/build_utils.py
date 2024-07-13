@@ -86,6 +86,8 @@ def attack_enemies(n_to_attack: int, enemy_bases_coords: list[Vec2], bases: list
 def heal_zombies(bases: list[Base], zombies: list[Zombie], map: Map):
     order = zombie_order(map, zombies, bases, 8)
     heals = []
+    busy_bases_ids = []
     for item in order:
         heals.append(Attack(blockId=item[0], target=item[1]))
+        busy_bases_ids.append(item[0])
     return heals

@@ -40,29 +40,21 @@ def main():
             ###
             # ADD ALL LOGIC HERE
             ###
-
-            map = Map(context.bases, context.enemy_bases, context.zombies, context.zpots)
-
-            routes_to_enemies = build_route_to_enemies(
-                n_to_build=5,
-                enemy_bases_coords=[Vec2(x=base.x, y=base.y) for base in context.enemy_bases],
-                bases_coords=[Vec2(x=base.x, y=base.y) for base in context.bases],
-                zombies=context.zombies,
-                map=map
-            )
-            if routes_to_enemies:
-                best_route = routes_to_enemies[0]
+            
+            if context.routes_to_enemies:
+                best_route = context.routes_to_enemies[0]
+                planner.clear_build_plan()
                 for loc in best_route:
                     build = Build(x=loc.x, y=loc.y)
                     planner.plan_build(build)
             else:
                 for base in context.bases:
                     for loc in (get_neighbor(Vec2(x=base.x, y=base.y), neighbor_type) for neighbor_type in NeighborType):
-                        if can_build_here(loc, map, context.zombies):
+                        if can_build_here(loc, context.map, context.zombies):
                             build = Build(x=loc.x, y=loc.y)
                             planner.plan_build(build)
 
-            attacks = heal_zombies(
+            attacks, busy_bases_ids = heal_zombies(
                 bases=context.bases,
                 zombies=context.zombies,
                 map=map
@@ -70,9 +62,10 @@ def main():
             attacks += attack_enemies(
                 n_to_attack=5,
                 enemy_bases_coords=[Vec2(x=base.x, y=base.y) for base in context.enemy_bases],
-                bases=context.bases,
+                bases=[base for base in context.bases if not base.id in busy_bases_ids],
             )
             if attacks:
+                planner.clear_attack_plan()
                 for attack in attacks:
                     planner.plan_attack(attack)
 
