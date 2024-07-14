@@ -10,6 +10,7 @@ load_dotenv()
 from src.api import *
 from src.const import ITER_TIME
 from src.planner import IntervalRunner, Planner
+
 from src.models import *
 
 def main():

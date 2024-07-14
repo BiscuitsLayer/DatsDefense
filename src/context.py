@@ -1,6 +1,11 @@
+<<<<<<< HEAD
+from DatsDefense.src.api import get_dynamic_objects, get_static_objects
+
+=======
 from src.api import get_dynamic_objects, get_static_objects
 from src.build_utils import build_route_to_enemies
 from src.models import *
+>>>>>>> 9053c0fcef3ad36df4080c1a7d783cb13c933e75
 
 class Singleton(type):
     _instances = {}
