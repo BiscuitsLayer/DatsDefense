@@ -1,0 +1,1053 @@
+{
+    "realmName": "test-day2-5",
+    "player": {
+        "gold": 6,
+        "points": 0,
+        "name": "long_live_breaking",
+        "zombieKills": 0,
+        "enemyBlockKills": 0,
+        "gameEndedAt": null
+    },
+    "base": [
+        {
+            "id": "0190ab32-03d9-77a0-9659-c05f6d10ee75",
+            "x": 48,
+            "y": 108,
+            "health": 1,
+            "attack": 10,
+            "range": 5,
+            "lastAttack": null
+        },
+        {
+            "id": "0190ab34-bab9-710a-862e-56ce1f44dc4e",
+            "x": 48,
+            "y": 109,
+            "health": 100,
+            "attack": 10,
+            "range": 5,
+            "lastAttack": null
+        },
+        {
+            "id": "0190ab34-ab18-777d-912c-6fa2bc2804b0",
+            "x": 49,
+            "y": 110,
+            "health": 100,
+            "attack": 10,
+            "range": 5,
+            "lastAttack": null
+        },
+        {
+            "id": "0190ab34-a34a-7385-85b1-c9feaad5baaa",
+            "x": 49,
+            "y": 109,
+            "health": 30,
+            "attack": 10,
+            "range": 5,
+            "lastAttack": null
+        },
+        {
+            "id": "0190ab34-a34a-7392-a1fe-5ffe7135dd88",
+            "x": 48,
+            "y": 110,
+            "health": 100,
+            "attack": 10,
+            "range": 5,
+            "lastAttack": null
+        },
+        {
+            "id": "0190ab32-03d9-7798-ab74-2a51223009c1",
+            "x": 47,
+            "y": 108,
+            "health": 256,
+            "attack": 40,
+            "range": 8,
+            "isHead": true,
+            "lastAttack": {
+                "x": 52,
+                "y": 113
+            }
+        }
+    ],
+    "zombies": [
+        {
+            "x": 45,
+            "y": 115,
+            "id": "8b4dac23-ccf3-40d3-baae-97e77160a13f",
+            "type": "fast",
+            "health": 19,
+            "attack": 43,
+            "speed": 2,
+            "waitTurns": 1,
+            "direction": "left"
+        },
+        {
+            "x": 45,
+            "y": 117,
+            "id": "e7be9023-ca8d-4298-8c37-525d5829e1d2",
+            "type": "liner",
+            "health": 19,
+            "attack": 43,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "left"
+        },
+        {
+            "x": 47,
+            "y": 104,
+            "id": "6ca74d68-e4d6-404b-abad-3125e9c459bb",
+            "type": "juggernaut",
+            "health": 9,
+            "attack": 999999,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "left"
+        },
+        {
+            "x": 41,
+            "y": 100,
+            "id": "0b82c449-2772-4e8e-a6d9-78bc1420f659",
+            "type": "chaos_knight",
+            "health": 17,
+            "attack": 37,
+            "speed": 3,
+            "waitTurns": 1,
+            "direction": "right"
+        },
+        {
+            "x": 43,
+            "y": 108,
+            "id": "0bbf9e90-0632-46d5-a3a8-efcb752428a9",
+            "type": "bomber",
+            "health": 19,
+            "attack": 43,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "right"
+        },
+        {
+            "x": 39,
+            "y": 116,
+            "id": "ad7430ec-26a1-43ad-987b-177f04ee9ed9",
+            "type": "liner",
+            "health": 19,
+            "attack": 43,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "left"
+        },
+        {
+            "x": 39,
+            "y": 116,
+            "id": "eb9cc499-db0a-493a-ab6f-790de1232f14",
+            "type": "fast",
+            "health": 19,
+            "attack": 43,
+            "speed": 2,
+            "waitTurns": 1,
+            "direction": "right"
+        },
+        {
+            "x": 39,
+            "y": 119,
+            "id": "1a8efba2-2c9e-49d9-b1c0-2b08201c9f12",
+            "type": "chaos_knight",
+            "health": 15,
+            "attack": 31,
+            "speed": 3,
+            "waitTurns": 1,
+            "direction": "left"
+        },
+        {
+            "x": 39,
+            "y": 111,
+            "id": "62e44ccf-354d-4b73-a291-a20d61a5060e",
+            "type": "bomber",
+            "health": 19,
+            "attack": 43,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "right"
+        },
+        {
+            "x": 40,
+            "y": 98,
+            "id": "f2d4ea4f-f303-4523-b426-95c414f64419",
+            "type": "bomber",
+            "health": 15,
+            "attack": 31,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "right"
+        },
+        {
+            "x": 42,
+            "y": 113,
+            "id": "6cccfd3f-7bf5-40fc-b9e2-3c9b74ea2698",
+            "type": "bomber",
+            "health": 19,
+            "attack": 43,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "left"
+        },
+        {
+            "x": 45,
+            "y": 109,
+            "id": "f12a0edb-babd-405f-8270-0b313a86347a",
+            "type": "chaos_knight",
+            "health": 19,
+            "attack": 43,
+            "speed": 3,
+            "waitTurns": 1,
+            "direction": "down"
+        },
+        {
+            "x": 43,
+            "y": 107,
+            "id": "9f3d594b-09e9-45fc-bb41-1e1cfcc4bb0d",
+            "type": "normal",
+            "health": 19,
+            "attack": 43,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "right"
+        },
+        {
+            "x": 39,
+            "y": 118,
+            "id": "1f01df65-40c0-40aa-8b9b-abc8240ad833",
+            "type": "chaos_knight",
+            "health": 15,
+            "attack": 31,
+            "speed": 3,
+            "waitTurns": 1,
+            "direction": "down"
+        },
+        {
+            "x": 37,
+            "y": 106,
+            "id": "13dacce3-75b9-4068-b913-7768e340ef92",
+            "type": "normal",
+            "health": 19,
+            "attack": 43,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "right"
+        },
+        {
+            "x": 42,
+            "y": 103,
+            "id": "88ca10da-e4bd-4a35-9a61-166accefec9a",
+            "type": "juggernaut",
+            "health": 19,
+            "attack": 999999,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "left"
+        },
+        {
+            "x": 37,
+            "y": 102,
+            "id": "f214ae33-4c33-4286-a2d4-6b7e84d412c0",
+            "type": "liner",
+            "health": 19,
+            "attack": 43,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "left"
+        },
+        {
+            "x": 41,
+            "y": 117,
+            "id": "7a9347ff-5cc0-4da5-89c3-2244d82661bb",
+            "type": "fast",
+            "health": 19,
+            "attack": 43,
+            "speed": 2,
+            "waitTurns": 1,
+            "direction": "left"
+        },
+        {
+            "x": 39,
+            "y": 101,
+            "id": "a31f9917-7091-4133-8a74-7e456fee38cc",
+            "type": "chaos_knight",
+            "health": 19,
+            "attack": 43,
+            "speed": 3,
+            "waitTurns": 1,
+            "direction": "up"
+        },
+        {
+            "x": 45,
+            "y": 118,
+            "id": "499481b0-6854-4445-92e7-9cb830226045",
+            "type": "chaos_knight",
+            "health": 19,
+            "attack": 43,
+            "speed": 3,
+            "waitTurns": 1,
+            "direction": "down"
+        },
+        {
+            "x": 45,
+            "y": 118,
+            "id": "d9683d35-14da-4434-8a63-2f847d530451",
+            "type": "normal",
+            "health": 19,
+            "attack": 43,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "left"
+        },
+        {
+            "x": 39,
+            "y": 109,
+            "id": "c61266be-8d76-484e-8404-d462b16087c0",
+            "type": "juggernaut",
+            "health": 17,
+            "attack": 999999,
+            "speed": 1,
+            "waitTurns": 2,
+            "direction": "right"
+        },
+        {
+            "x": 44,
+            "y": 99,
+            "id": "3c6c9317-a310-4549-a7b6-642dd903b114",
+            "type": "normal",
+            "health": 15,
+            "attack": 31,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "right"
+        },
+        {
+            "x": 44,
+            "y": 107,
+            "id": "46010166-3433-4da4-a992-6ed1e359394a",
+            "type": "juggernaut",
+            "health": 15,
+            "attack": 999999,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "right"
+        },
+        {
+            "x": 44,
+            "y": 107,
+            "id": "e560b65f-4b18-4380-978d-3108c66bb96e",
+            "type": "normal",
+            "health": 19,
+            "attack": 43,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "right"
+        },
+        {
+            "x": 37,
+            "y": 109,
+            "id": "31f10337-b013-4800-8118-9ca5cbe7584c",
+            "type": "juggernaut",
+            "health": 19,
+            "attack": 999999,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "right"
+        },
+        {
+            "x": 42,
+            "y": 114,
+            "id": "c01a88c1-1831-4838-968a-c045e7bc4983",
+            "type": "normal",
+            "health": 15,
+            "attack": 31,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "right"
+        },
+        {
+            "x": 38,
+            "y": 119,
+            "id": "c8a1a2ac-464d-4777-910d-83d0ac7aea44",
+            "type": "liner",
+            "health": 17,
+            "attack": 37,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "right"
+        },
+        {
+            "x": 46,
+            "y": 116,
+            "id": "dbc2b46f-6ff5-431d-9a31-151236a7f983",
+            "type": "bomber",
+            "health": 19,
+            "attack": 43,
+            "speed": 1,
+            "waitTurns": 1,
+            "direction": "left"
+        },
+        {
+            "x": 47,
+            "y": 115,
+            "id": "08f02976-a4f1-4a8d-b7c6-e93902e43c7e",
+            "type": "juggernaut",
+            "health": 21,
+            "attack": 999999,
+            "speed": 1,
+            "waitTurns": 2,
+            "direction": "left"
+        }
+    ],
+    "enemyBlocks": [
+        {
+            "x": 56,
+            "y": 114,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": {
+                "x": 51,
+                "y": 114
+            }
+        },
+        {
+            "x": 54,
+            "y": 107,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 57,
+            "y": 112,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 59,
+            "y": 105,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": {
+                "x": 63,
+                "y": 106
+            }
+        },
+        {
+            "x": 57,
+            "y": 117,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 105,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 55,
+            "y": 114,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": {
+                "x": 51,
+                "y": 112
+            }
+        },
+        {
+            "x": 56,
+            "y": 112,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": {
+                "x": 51,
+                "y": 112
+            }
+        },
+        {
+            "x": 57,
+            "y": 104,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 54,
+            "y": 108,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 59,
+            "y": 111,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 115,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 57,
+            "y": 113,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 56,
+            "y": 108,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 54,
+            "y": 109,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": {
+                "x": 49,
+                "y": 109
+            }
+        },
+        {
+            "x": 56,
+            "y": 109,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 53,
+            "y": 109,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": {
+                "x": 49,
+                "y": 109
+            }
+        },
+        {
+            "x": 57,
+            "y": 103,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": {
+                "x": 61,
+                "y": 100
+            }
+        },
+        {
+            "x": 56,
+            "y": 110,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 51,
+            "y": 107,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": {
+                "x": 47,
+                "y": 104
+            }
+        },
+        {
+            "x": 52,
+            "y": 108,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": {
+                "x": 49,
+                "y": 109
+            }
+        },
+        {
+            "x": 58,
+            "y": 108,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 111,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 56,
+            "y": 101,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 57,
+            "y": 111,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 56,
+            "y": 113,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 119,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 55,
+            "y": 108,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 59,
+            "y": 113,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 118,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 100,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 57,
+            "y": 105,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 116,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 114,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 103,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": {
+                "x": 61,
+                "y": 100
+            }
+        },
+        {
+            "x": 59,
+            "y": 118,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 57,
+            "y": 106,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 59,
+            "y": 115,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 56,
+            "y": 117,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 59,
+            "y": 101,
+            "health": 60,
+            "attack": 10,
+            "lastAttack": {
+                "x": 63,
+                "y": 98
+            }
+        },
+        {
+            "x": 57,
+            "y": 101,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": {
+                "x": 61,
+                "y": 100
+            }
+        },
+        {
+            "x": 59,
+            "y": 100,
+            "health": 90,
+            "attack": 10,
+            "lastAttack": {
+                "x": 59,
+                "y": 95
+            }
+        },
+        {
+            "x": 55,
+            "y": 105,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 110,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 57,
+            "y": 109,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 55,
+            "y": 112,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": {
+                "x": 51,
+                "y": 114
+            }
+        },
+        {
+            "x": 51,
+            "y": 108,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": {
+                "x": 47,
+                "y": 111
+            }
+        },
+        {
+            "x": 59,
+            "y": 112,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 55,
+            "y": 102,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 107,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 59,
+            "y": 109,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 109,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 59,
+            "y": 119,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 120,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 56,
+            "y": 102,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 59,
+            "y": 107,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 112,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 113,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 55,
+            "y": 115,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 56,
+            "y": 104,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 56,
+            "y": 105,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 59,
+            "y": 103,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": {
+                "x": 63,
+                "y": 100
+            }
+        },
+        {
+            "x": 57,
+            "y": 119,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 57,
+            "y": 107,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 57,
+            "y": 114,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 59,
+            "y": 117,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 56,
+            "y": 103,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 59,
+            "y": 120,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 106,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 53,
+            "y": 108,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": {
+                "x": 49,
+                "y": 109
+            }
+        },
+        {
+            "x": 59,
+            "y": 108,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 55,
+            "y": 116,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 57,
+            "y": 120,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 59,
+            "y": 106,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 56,
+            "y": 116,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 57,
+            "y": 108,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 58,
+            "y": 117,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 57,
+            "y": 110,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 57,
+            "y": 115,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 56,
+            "y": 106,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 51,
+            "y": 109,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 59,
+            "y": 114,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 54,
+            "y": 106,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 56,
+            "y": 118,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        },
+        {
+            "x": 59,
+            "y": 110,
+            "health": 100,
+            "attack": 10,
+            "lastAttack": null
+        }
+    ],
+    "turnEndsInMs": 157,
+    "turn": 89
+}

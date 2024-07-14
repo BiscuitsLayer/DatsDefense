@@ -1,0 +1,78 @@
+{
+    "base": [
+        {
+            "id": "id1",
+            "x": 218,
+            "y": 203,
+            "health": 100,
+            "attack": 10,
+            "range": 5,
+            "lastAttack": null
+        },
+        {
+            "id": "id2",
+            "x": 218,
+            "y": 202,
+            "health": 100,
+            "attack": 10,
+            "range": 5,
+            "lastAttack": null
+        },
+        {
+            "id": "id3",
+            "x": 217,
+            "y": 203,
+            "health": 100,
+            "attack": 10,
+            "range": 5,
+            "lastAttack": null
+        },
+        {
+            "id": "id4",
+            "x": 217,
+            "y": 202,
+            "health": 100,
+            "attack": 10,
+            "range": 5,
+            "lastAttack": null
+        }
+    ],
+    "enemyBlocks": [
+        {
+            "id": "enemy-id1",
+            "x": 208,
+            "y": 193,
+            "health": 100,
+            "attack": 10,
+            "range": 5,
+            "lastAttack": null
+        },
+        {
+            "id": "enemy-id2",
+            "x": 208,
+            "y": 192,
+            "health": 100,
+            "attack": 10,
+            "range": 5,
+            "lastAttack": null
+        },
+        {
+            "id": "enemy-id3",
+            "x": 207,
+            "y": 193,
+            "health": 100,
+            "attack": 10,
+            "range": 5,
+            "lastAttack": null
+        },
+        {
+            "id": "enemy-id4",
+            "x": 207,
+            "y": 192,
+            "health": 100,
+            "attack": 10,
+            "range": 5,
+            "lastAttack": null
+        }
+    ]
+}

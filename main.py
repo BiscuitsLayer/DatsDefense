@@ -1,25 +1,30 @@
 import os
+import time
 from dotenv import load_dotenv
+
+from src.bfs import build_route, can_build_here
+from src.build_utils import attack_enemies, build_route_to_enemies, heal_zombies
+from src.utils import get_neighbor
 load_dotenv()
 
-<<<<<<< HEAD
-from DatsDefense.src.api import *
-from src.drawer import draw_map
-=======
 from src.api import *
 from src.const import ITER_TIME
 from src.planner import IntervalRunner, Planner
-from src.models import Build, Vec2, Attack
->>>>>>> 9053c0fcef3ad36df4080c1a7d783cb13c933e75
+
+from src.models import *
 
 def main():
     # Verify token and register for a round
     print(f"Token is {os.getenv('TOKEN')}")
     msg, participating = participate()
     print(msg)
-    if not participating:
-        print("Exiting")
-        return None
+
+    while not participating:
+        msg, participating = participate()
+        print(msg)
+        time.sleep(5)
+        # print("Exiting")
+        # return None
     
     # Create context to avoid doing many requests for a single iteration
     context = Context()
@@ -36,15 +41,34 @@ def main():
             ###
             # ADD ALL LOGIC HERE
             ###
+            
+            if context.routes_to_enemies:
+                best_route = context.routes_to_enemies[0]
+                planner.clear_build_plan()
+                for loc in best_route:
+                    build = Build(x=loc.x, y=loc.y)
+                    planner.plan_build(build)
+            else:
+                for base in context.bases:
+                    for loc in (get_neighbor(Vec2(x=base.x, y=base.y), neighbor_type) for neighbor_type in NeighborType):
+                        if can_build_here(loc, context.map, context.zombies):
+                            build = Build(x=loc.x, y=loc.y)
+                            planner.plan_build(build)
 
-            # Sample logic can be done like that
-            for base in (context.bases or []):
-                attack = Attack(target=Vec2(x=base.x+5, y=base.y+5), blockId=base.id)
-                planner.plan_attack(attack)
-
-            for base in (context.bases or []):
-                build = Build(x=base.x+1, y=base.y+1)
-                planner.plan_build(build)
+            attacks, busy_bases_ids = heal_zombies(
+                bases=context.bases,
+                zombies=context.zombies,
+                map=context.map
+            )
+            attacks += attack_enemies(
+                n_to_attack=5,
+                enemy_bases_coords=[Vec2(x=base.x, y=base.y) for base in context.enemy_bases],
+                bases=[base for base in context.bases if not base.id in busy_bases_ids],
+            )
+            if attacks:
+                planner.clear_attack_plan()
+                for attack in attacks:
+                    planner.plan_attack(attack)
 
         except KeyboardInterrupt:
             print("Shutting down...")

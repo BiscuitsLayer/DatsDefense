@@ -1,27 +1,8 @@
 import os
 import sys
 import logging
-from src.models import Base, Vec2, NeighborType, Map, TileType, Zombie, EnemyBase
 from typing import List
-from war_utils import dist_sqr as dist
-
-def get_logger(name):
-    """
-    Get a logger with the given name
-    """
-    logger = logging.getLogger(name)
-    ch = logging.StreamHandler()
-    if os.environ.get("LOGFILE", None):
-        filename = os.environ["LOGFILE"] 
-        file = logging.FileHandler(filename)
-
-    console = logging.StreamHandler(stream=sys.stdout)
-
-    logger.setLevel(logging.DEBUG)
-    logger.addHandler(file)
-    logger.addHandler(console)
-
-    return logger
+from src.models import Base, EnemyBase, Map, TileType, Vec2, NeighborType, Zombie
 
 
 def can_attack(loc: Vec2, bases: list[Base]):
@@ -35,24 +16,25 @@ def can_attack(loc: Vec2, bases: list[Base]):
 
     return possible_bases
 
-def get_neighbor(loc: Vec2, type: NeighborType):
+
+def get_neighbor(loc: Vec2, type: NeighborType, delta: int = 1):
     match type:
         case NeighborType.TOP:
-            return Vec2(x=loc.x, y=loc.y-1)
+            return Vec2(x=loc.x, y=loc.y-delta)
         case NeighborType.TOP_LEFT:
-            return Vec2(x=loc.x-1, y=loc.y-1)
+            return Vec2(x=loc.x-delta, y=loc.y-delta)
         case NeighborType.TOP_RIGHT:
-            return Vec2(x=loc.x+1, y=loc.y-1)
+            return Vec2(x=loc.x+delta, y=loc.y-delta)
         case NeighborType.LEFT:
-            return Vec2(x=loc.x-1, y=loc.y)
+            return Vec2(x=loc.x-delta, y=loc.y)
         case NeighborType.RIGHT:
-            return Vec2(x=loc.x+1, y=loc.y)
+            return Vec2(x=loc.x+delta, y=loc.y)
         case NeighborType.BOTTOM_LEFT:
-            return Vec2(x=loc.x-1, y=loc.y+1)
+            return Vec2(x=loc.x-delta, y=loc.y+delta)
         case NeighborType.BOTTOM_RIGHT:
-            return Vec2(x=loc.x+1, y=loc.y+1)
+            return Vec2(x=loc.x+delta, y=loc.y+delta)
         case NeighborType.BOTTOM:
-            return Vec2(x=loc.x, y=loc.y+1)
+            return Vec2(x=loc.x, y=loc.y+delta)
         
 def get_direction(dir: str) -> Vec2:
     if dir == "up":
